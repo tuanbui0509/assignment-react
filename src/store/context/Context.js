@@ -1,7 +1,7 @@
-import React, { createContext, useReducer } from 'react'
+import moment from 'moment';
+import React, { createContext, useReducer } from 'react';
 const Context = createContext(null)
 const user_icon = require('../../assets/images/icon-user.png').default
-
 const initialTask = [
     {
         id: '0ac07e96-46cd-11ec-81d3-0242ac130003',
@@ -47,6 +47,28 @@ const initialTask = [
     }
 ]
 
+const initialSchedule = [
+    {
+        id: '0ac07e96-46cd-11ec-81d3-0242bc130003',
+        title: 'Meeting',
+        description: 'Release overview',
+        creator: 'Le Cao',
+        location: 'New York',
+        time_start: moment(new Date()).format('DD/MM/yyyy HH:mm:ss'),
+        time_end: moment(new Date()).format('DD/MM/yyyy HH:mm:ss'),
+    },
+    {
+        id: '0fc5b988-46cd-11ec-81d3-0242bc130004',
+        title: 'Meeting',
+        description: 'Startup',
+        creator: 'Son Dang',
+        location: 'New York',
+        time_start: moment(new Date()).format('DD/MM/yyyy HH:mm:ss'),
+        time_end: moment(new Date()).format('DD/MM/yyyy HH:mm:ss'),
+    },
+
+]
+
 const initialUser = [
     {
         id: '0ac07e96-46cd-11ec-81d3-0242ac130004',
@@ -70,7 +92,7 @@ const initialUser = [
         position: 'Developer',
         image: user_icon,
         password: '123456',
-        email: 'tuanbui123@gmail.com'
+        email: 'buingoctuan99@gmail.com'
     },
     {
         id: '0ac07e96-46cd-11ec-81d3-0242ac130007',
@@ -164,12 +186,51 @@ const UserReducer = (state, action) => {
     }
 }
 
+const ScheduleReducer = (state, action) => {
+    let id = -1, index, schedule
+    switch (action.type) {
+        case 'GET_SCHEDULES':
+            return state
+        case 'UPDATE_SCHEDULE':
+            schedule = action.schedule;
+            index = findById(state, schedule.id);
+            state[index] = {
+                ...state[index],
+                location: schedule.location,
+                title: schedule.title,
+                description: schedule.description,
+                creator: schedule.creator,
+                time_start: schedule.time_start,
+                time_end: schedule.time_end,
+            };
+            return [...state];
+        case 'REMOVE_SCHEDULE':
+            index = findById(state, action.id)
+            state.splice(index, 1)
+            return [...state]
+        case 'ADD_SCHEDULE':
+            schedule = action.schedule
+            const newSchedule = {
+                location: schedule.location,
+                title: schedule.title,
+                description: schedule.description,
+                creator: schedule.creator,
+                time_start: schedule.time_start,
+                time_end: schedule.time_end,
+                id: create_UUID(),
+            }
+            return [...state, newSchedule]
+        default:
+            throw new Error()
+    }
+}
+
 const LoginReducer = (state, action) => {
     switch (action.type) {
         case 'LOGIN':
-            return true
+            return action.user
         case 'LOGOUT':
-            return false
+            return null
         default:
             throw new Error()
     }
@@ -198,10 +259,12 @@ const findById = (state, id) => {
 const ContextProvider = (props) => {
     const [tasks, dispatchTasks] = useReducer(TaskReducer, initialTask)
     const [users, dispatchUsers] = useReducer(UserReducer, initialUser)
-    const [login, dispatchLogin] = useReducer(LoginReducer, false)
-    let value = { tasks, dispatchTasks, users, dispatchUsers, login, dispatchLogin }
+    const [schedules, dispatchSchedules] = useReducer(ScheduleReducer, initialSchedule)
+    const [login, dispatchLogin] = useReducer(LoginReducer, null)
+    let value = { tasks, dispatchTasks, users, dispatchUsers, login, dispatchLogin, schedules, dispatchSchedules }
     return (
         <Context.Provider value={value}>{props.children}</Context.Provider>
     )
 }
-export { ContextProvider, Context }
+export { ContextProvider, Context };
+

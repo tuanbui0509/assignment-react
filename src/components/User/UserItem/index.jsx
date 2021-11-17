@@ -140,7 +140,7 @@ const UserItem = (props) => {
                                 {validate.position ? <p>You need enter to Position</p> : null}
                             </>
                         }
-                        <Link to="#" className="btn btn-primary m-2">Schedule</Link>
+                        <Link to="/schedule" className="btn btn-primary m-2">Schedule</Link>
                     </div>
                     <div className="card-footer flex-center">
 

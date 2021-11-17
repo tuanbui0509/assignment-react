@@ -6,6 +6,8 @@ import Schedule from '../pages/Schedule';
 import NotFound from '../pages/NotFound';
 import AddTask from '../pages/Dashboard/AddTask';
 import EditTask from '../pages/Dashboard/EditTask';
+import AddSchedule from '../pages/Schedule/AddSchedule';
+import EditSchedule from '../pages/Schedule/EditSchedule';
 
 const routes = [
     {
@@ -15,17 +17,17 @@ const routes = [
     },
     {
         path: '/user',
-        exact: false,
+        exact: true,
         main: () => <User />
     },
     {
         path: '/login',
-        exact: false,
+        exact: true,
         main: () => <Login />
     },
     {
         path: '/schedule',
-        exact: false,
+        exact: true,
         main: () => <Schedule />
     },
     {
@@ -35,12 +37,22 @@ const routes = [
     },
     {
         path: '/dashboard/edit/:id',
-        exact: false,
+        exact: true,
         main: ({ match, history }) => <EditTask match={match} history={history} />
     },
     {
+        path: '/schedule/add',
+        exact: true,
+        main: ({ history }) => <AddSchedule history={history} />
+    },
+    {
+        path: '/schedule/edit/:id',
+        exact: true,
+        main: ({ match, history }) => <EditSchedule match={match} history={history} />
+    },
+    {
         path: '',
-        exact: false,
+        exact: true,
         main: () => <NotFound />
     }
 ];

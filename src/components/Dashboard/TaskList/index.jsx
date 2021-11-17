@@ -5,11 +5,6 @@ import { Context } from '../../../store/context/Context'
 
 const TaskList = (props) => {
     const { tasks, dispatchTasks } = useContext(Context);
-
-    console.log('====================================');
-    console.log(tasks?.filter(word => word.status === 1));
-    console.log('====================================');
-    console.log(tasks);
     return (
         <div className="row align-items-start ">
             <div className="col col-4">

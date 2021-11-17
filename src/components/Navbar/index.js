@@ -1,11 +1,10 @@
-import React from 'react';
-import { Route, Link } from 'react-router-dom';
-import { Nav, NavItem, NavLink } from 'reactstrap';
+import React, { useContext } from 'react';
+import { Link, Route } from 'react-router-dom';
+import { Context } from '../../store/context/Context';
 
 const menus = [
     {
         label: 'Dashboard',
-        // to: ['/', '/dashboard', '/dashboard/*'],
         to: '/',
         exact: true
     },
@@ -27,9 +26,20 @@ const menus = [
 ]
 // custom Link
 const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
+    let paths
+    if (to === '/') {
+        paths = ['/', '/dashboard', '/dashboard/*']
+    }
+    else if (to === '/schedule') {
+        paths = ['/schedule', '/schedule/*']
+    }
+    else {
+        paths = to
+    }
+    console.log(paths);
     return (
         <Route
-            path={to === '/' ? ['/', '/dashboard', '/dashboard/*'] : to}
+            path={paths}
             exact={activeOnlyWhenExact}
             children={({ match }) => {
                 let active = match ? 'active' : ''
@@ -42,6 +52,8 @@ const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
 }
 
 const Menu = () => {
+    const { login } = useContext(Context);
+
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container">
@@ -49,14 +61,15 @@ const Menu = () => {
                     <nav className="nav nav-pills nav-fill">
                         {showMenus(menus)}
                     </nav>
-
                 </div>
+                {login ? <span>{login.email}</span> : null}
             </div>
         </nav>
     )
 }
 
 const showMenus = (menus) => {
+
     let result = null;
     if (menus.length > 0) {
         result = menus.map((menu, index) => {
