@@ -3,7 +3,6 @@ import { Link } from 'react-router-dom'
 import UserItem from '../../components/User/UserItem'
 import UserList from '../../components/User/UserList'
 import { Context } from '../../store/context/Context'
-// import users from '../../store/users'
 const User = props => {
     const [isAdd, setIsAdd] = useState(false)
     const { users, dispatchUsers } = useContext(Context);
@@ -18,8 +17,7 @@ const User = props => {
                 <ion-icon name="person-add"></ion-icon>Add</button>
 
             <div className="row">
-                {isAdd ?
-                    <UserItem /> : null}
+                {isAdd ? <UserItem user={null} setIsAdd={setIsAdd} /> : null}
                 <UserList users={users} />
             </div>
         </div>

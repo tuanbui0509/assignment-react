@@ -49,7 +49,7 @@ const initialTask = [
 
 const initialUser = [
     {
-        id: 1,
+        id: '0ac07e96-46cd-11ec-81d3-0242ac130004',
         name: 'Le Cao',
         position: 'Developer',
         image: user_icon,
@@ -57,7 +57,7 @@ const initialUser = [
         email: 'lecao123@gmail.com'
     },
     {
-        id: 2,
+        id: '0ac07e96-46cd-11ec-81d3-0242ac130005',
         name: 'Son Dang',
         position: 'QC',
         image: user_icon,
@@ -65,7 +65,7 @@ const initialUser = [
         email: 'sondang123@gmail.com'
     },
     {
-        id: 3,
+        id: '0ac07e96-46cd-11ec-81d3-0242ac130006',
         name: 'Tuan Bui',
         position: 'Developer',
         image: user_icon,
@@ -73,7 +73,7 @@ const initialUser = [
         email: 'tuanbui123@gmail.com'
     },
     {
-        id: 4,
+        id: '0ac07e96-46cd-11ec-81d3-0242ac130007',
         name: 'Thuy Duong',
         position: 'Developer',
         image: user_icon,
@@ -81,7 +81,7 @@ const initialUser = [
         email: 'duongthuy123@gmail.com'
     },
     {
-        id: 5,
+        id: '0ac07e96-46cd-11ec-81d3-0242ac130008',
         name: 'Thanh Toan',
         position: 'PM',
         image: user_icon,
@@ -89,7 +89,7 @@ const initialUser = [
         email: 'thanhtoan123@gmail.com'
     },
     {
-        id: 6,
+        id: '0ac07e96-46cd-11ec-81d3-0242ac130009',
         name: 'Quang Long',
         position: 'QC',
         image: user_icon,
@@ -116,9 +116,6 @@ const TaskReducer = (state, action) => {
         case 'REMOVE_TASK':
             index = findById(state, action.id)
             state.splice(index, 1)
-            console.log('====================================');
-            console.log(action.id, [...state]);
-            console.log('====================================');
             return [...state]
         case 'ADD_TASK':
             task = action.task
@@ -135,33 +132,44 @@ const TaskReducer = (state, action) => {
 }
 
 const UserReducer = (state, action) => {
-    let id = -1
+    let id = -1, index, user
     switch (action.type) {
-
-        case 'GET_USER':
-            id = findById(state, action.userId)
-            console.log(id);
-            return state[id]
-        case 'DO_USER':
-            return state.map((user) => {
-                return user.id === action.id ? { ...user, complete: true } : user
-            })
-        case 'REMOVE_USER':
-            id = findById(state, action.userId)
-            if (id !== -1) {
-                let list = [...state]
-                state = list.filter(item => item.id !== id)
-            }
+        case 'GET_USERS':
             return state
+        case 'UPDATE_USER':
+            user = action.user;
+            index = findById(state, user.id);
+            state[index] = {
+                ...state[index],
+                name: user.name,
+                position: user.position,
+            };
+            return [...state];
+        case 'REMOVE_USER':
+            index = findById(state, action.id)
+            state.splice(index, 1)
+            return [...state]
         case 'ADD_USER':
-            const user = action.user
+            user = action.user
             const newUser = {
-                title: user.title,
-                description: user.description,
+                name: user.name,
+                position: user.position,
                 id: create_UUID(),
-                status: user.status
+                password: '123456',
+                email: 'user@gmail.com'
             }
             return [...state, newUser]
+        default:
+            throw new Error()
+    }
+}
+
+const LoginReducer = (state, action) => {
+    switch (action.type) {
+        case 'LOGIN':
+            return true
+        case 'LOGOUT':
+            return false
         default:
             throw new Error()
     }
@@ -190,7 +198,8 @@ const findById = (state, id) => {
 const ContextProvider = (props) => {
     const [tasks, dispatchTasks] = useReducer(TaskReducer, initialTask)
     const [users, dispatchUsers] = useReducer(UserReducer, initialUser)
-    let value = { tasks, dispatchTasks, users, dispatchUsers }
+    const [login, dispatchLogin] = useReducer(LoginReducer, false)
+    let value = { tasks, dispatchTasks, users, dispatchUsers, login, dispatchLogin }
     return (
         <Context.Provider value={value}>{props.children}</Context.Provider>
     )

@@ -1,34 +1,28 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useContext } from 'react'
 import PropTypes from 'prop-types'
+import { Context } from '../../store/context/Context';
+
 const Login = props => {
     const initialValues = { email: "", password: "" };
-
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
-    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const submit = () => {
-        console.log(formValues);
-    };
-
-    //input change handler
-    const handleChange = (e) => {
-        const { name, value } = e.target;
-        setFormValues({ ...formValues, [name]: value });
-    };
-
+    const { login, dispatchLogin } = useContext(Context);
     //form submission handler
     const handleSubmit = (e) => {
         e.preventDefault();
-        setFormErrors(validate(formValues));
-        setIsSubmitting(true);
+        console.log(setFormErrors(validate(formValues)));
+        if (setFormErrors(validate(formValues))) {
+            console.log('====================================');
+            console.log(formValues);
+            console.log('====================================');
+        }
     };
 
     //form validation handler
     const validate = (values) => {
         let errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-
         if (!values.email) {
             errors.email = "Cannot be blank";
         } else if (!regex.test(values.email)) {
@@ -40,24 +34,14 @@ const Login = props => {
         } else if (values.password.length < 6) {
             errors.password = "Password must be more than 6 characters";
         }
-
         return errors;
     };
-
-    useEffect(() => {
-        if (Object.keys(formErrors).length === 0 && isSubmitting) {
-            submit();
-        }
-    }, [formErrors]);
 
 
     return (
         <div className="container">
             <div className='container-form container-login'>
                 <h2 className='text-center'>Sign In</h2>
-                {Object.keys(formErrors).length === 0 && isSubmitting && (
-                    <span className="success-msg">Form submitted successfully</span>
-                )}
                 <form onSubmit={handleSubmit} noValidate>
                     <div className="form-row">
                         <label htmlFor="email">Email</label>
@@ -66,7 +50,20 @@ const Login = props => {
                             name="email"
                             id="email"
                             value={formValues.email}
-                            onChange={handleChange}
+                            onBlur={(e) => {
+                                if (e.target.value.length === 0) {
+                                    setFormErrors({ ...formErrors, email: "Cannot be blank" })
+                                }
+                            }}
+                            onChange={(e) => {
+                                if (e.target.value.length === 0) {
+                                    setFormErrors({ ...formErrors, email: "Cannot be blank" })
+                                }
+                                else {
+                                    setFormErrors(validate(formValues));
+                                }
+                                setFormValues({ ...formValues, email: e.target.value })
+                            }}
                             className={formErrors.email && "input-error"}
                         />
                         {formErrors.email && (
@@ -81,7 +78,21 @@ const Login = props => {
                             name="password"
                             id="password"
                             value={formValues.password}
-                            onChange={handleChange}
+                            // onChange={handleChange}
+                            onChange={(e) => {
+                                if (e.target.value.length === 0) {
+                                    setFormErrors({ ...formErrors, password: "Cannot be blank" })
+                                }
+                                else {
+                                    setFormErrors({ ...formErrors, password: "" })
+                                }
+                                setFormValues({ ...formValues, password: e.target.value })
+                            }}
+                            onBlur={(e) => {
+                                if (e.target.value.length === 0) {
+                                    setFormErrors({ ...formErrors, password: "Cannot be blank" })
+                                }
+                            }}
                             className={formErrors.password && "input-error"}
                         />
                         {formErrors.password && (
