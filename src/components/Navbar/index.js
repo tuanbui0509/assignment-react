@@ -5,6 +5,7 @@ import { Nav, NavItem, NavLink } from 'reactstrap';
 const menus = [
     {
         label: 'Dashboard',
+        // to: ['/', '/dashboard', '/dashboard/*'],
         to: '/',
         exact: true
     },
@@ -28,7 +29,7 @@ const menus = [
 const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
     return (
         <Route
-            path={to}
+            path={to === '/' ? ['/', '/dashboard', '/dashboard/*'] : to}
             exact={activeOnlyWhenExact}
             children={({ match }) => {
                 let active = match ? 'active' : ''

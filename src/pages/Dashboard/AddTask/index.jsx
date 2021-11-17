@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
+import React, { useState, useContext } from 'react'
 import PropTypes from 'prop-types'
 import { useHistory } from "react-router-dom";
+import { Context } from '../../../store/context/Context';
 const AddTask = props => {
     const history = useHistory();
+    const { tasks, dispatchTasks } = useContext(Context);
+
     const [task, setTask] = useState({
         title: '',
         description: '',
@@ -11,7 +14,8 @@ const AddTask = props => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(task);
+        dispatchTasks({ type: 'ADD_TASK', task })
+        history.push('/')
     }
 
 
@@ -62,25 +66,24 @@ const AddTask = props => {
                                     className="form-check-input"
                                     type="radio"
                                     name="status"
-                                    value='0'
+                                    value={0}
                                     id="0"
                                     checked={task.status === 0}
-                                    onChange={(e) => setTask({ ...task, status: e.target.value })}
+                                    onChange={(e) => setTask({ ...task, status: parseInt(e.target.value) })}
                                 />
                                 <label className="form-check-label" htmlFor="0">
                                     Now
                                 </label>
+
                             </div>
                             <div className="form-check" style={{ marginRight: '1rem' }}>
                                 <input
                                     className="form-check-input"
-                                    value='1'
+                                    value={1}
                                     type="radio"
                                     name="status"
                                     id="1"
-                                    onChange={(e) => setTask({ ...task, status: e.target.value })}
-                                    checked={task.status === 1}
-
+                                    onChange={(e) => setTask({ ...task, status: parseInt(e.target.value) })}
                                 />
                                 <label className="form-check-label" htmlFor="1">
                                     In process
@@ -89,12 +92,11 @@ const AddTask = props => {
                             <div className="form-check" style={{ marginRight: '1rem' }}>
                                 <input
                                     className="form-check-input"
-                                    value='2'
+                                    value={2}
                                     type="radio"
                                     name="status"
                                     id="2"
-                                    onChange={(e) => setTask({ ...task, status: e.target.value })}
-                                    checked={task.status === 2}
+                                    onChange={(e) => setTask({ ...task, status: parseInt(e.target.value) })}
                                 />
                                 <label className="form-check-label" htmlFor="2">
                                     Done

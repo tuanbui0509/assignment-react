@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 import { Input } from 'reactstrap'
 const Task = props => {
     const { title, color, icon, tasks } = props
-    console.log(tasks);
     return (
         <div className="card">
             <div className={`card-header d-flex align-items-center justify-content-between ${color} text-white`}>
@@ -26,7 +25,8 @@ const Task = props => {
                                 aria-labelledby={`panelsStayOpen-heading-${index}`}>
                                 <div className="accordion-body">
                                     <div className="card text-dark bg-light mb-3" >
-                                        <div className="card-header" style={{ textTransform: 'capitalize', fontSize: '22px' }}>{task.title} detail view</div>
+                                        <div className="card-header" style={{ textTransform: 'capitalize', fontSize: '22px' }}>
+                                            <Link className='text-decoration-none text-black' to={`/dashboard/edit/${task.id}`}>{task.title} detail view</Link> </div>
                                         <div className="card-body">
 
                                             <p className="card-text d-flex align-items-center justify-content-between">
@@ -50,7 +50,9 @@ const Task = props => {
                 :
                 <ul className="list-group" style={{ margin: '1rem' }}>
                     {tasks.map((task, index) => {
-                        return <li className="list-group-item" key={index}>{task.title}</li>
+                        return <li className="list-group-item" key={index}>
+                            <Link className='text-decoration-none text-black' to={`/dashboard/edit/${task.id}`}>{task.title}</Link>
+                        </li>
                     })}
                     {title === 'New Tasks' ? <Link to='/dashboard/add' className="btn btn-primary d-flex align-items-center" style={{ width: '100px', marginTop: '1rem' }}>
                         <ion-icon name="list" style={{ fontSize: '25px', marginRight: '0.5rem' }}></ion-icon>

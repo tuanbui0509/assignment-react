@@ -9,12 +9,7 @@ import EditTask from '../pages/Dashboard/EditTask';
 
 const routes = [
     {
-        path: '/',
-        exact: true,
-        main: () => <Dashboard />
-    },
-    {
-        path: '/dashboard',
+        path: ["/", "/dashboard"],
         exact: true,
         main: () => <Dashboard />
     },

@@ -1,8 +1,11 @@
-import React, { useState } from 'react'
-import PropTypes from 'prop-types'
-import { useHistory } from "react-router-dom";
+import React, { useContext, useState, useEffect } from 'react';
+import { useHistory, useParams } from "react-router-dom";
+import { Context } from '../../../store/context/Context'
+
 const AddTask = props => {
     const history = useHistory();
+    const { id } = useParams()
+    const { tasks, dispatchTasks } = useContext(Context);
     const [task, setTask] = useState({
         title: '',
         description: '',
@@ -11,16 +14,32 @@ const AddTask = props => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(task);
+        dispatchTasks({ type: 'UPDATE_TASK', task })
+        history.push('/')
     }
-
-
+    const handleRemove = (task) => {
+        var r = window.confirm(`Are you want to remove ${task.title}`)
+        if (r) {
+            dispatchTasks({ type: 'REMOVE_TASK', id: task.id })
+            history.push('/')
+        }
+       
+    }
+    const taskView = tasks.filter(item => item.id === id)
+    useEffect(() => {
+        setTask({
+            id: taskView[0].id,
+            title: taskView[0].title,
+            description: taskView[0].description,
+            status: taskView[0].status
+        })
+    }, [])
     return (
         <div>
             <button
                 type="button"
                 className="btn btn-danger flex-center"
-                onClick={() => { history.goBack() }}
+                onClick={() => { dispatchTasks({ type: 'GET_TASKS' }); history.goBack() }}
             >
                 <ion-icon name="arrow-back-circle"></ion-icon>Back
             </button>
@@ -33,8 +52,8 @@ const AddTask = props => {
                 </nav>
                 <div className="tab-content" id="nav-tabContent">
                     <div className="tab-pane fade show active" id="nav-view" role="tabpanel" aria-labelledby="nav-view-tab">
-                        <h5>ahsjkdad</h5>
-                        <p>ahsjkdad</p>
+                        <h5>{taskView[0].title}</h5>
+                        <p>{taskView[0].description}</p>
                     </div>
                     <div className="tab-pane fade" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
                         <form onSubmit={handleSubmit}>
@@ -68,10 +87,10 @@ const AddTask = props => {
                                         className="form-check-input"
                                         type="radio"
                                         name="status"
-                                        value='0'
+                                        value={0}
                                         id="0"
                                         checked={task.status === 0}
-                                        onChange={(e) => setTask({ ...task, status: e.target.value })}
+                                        onChange={(e) => setTask({ ...task, status: parseInt(e.target.value) })}
                                     />
                                     <label className="form-check-label" htmlFor="0">
                                         Now
@@ -80,11 +99,11 @@ const AddTask = props => {
                                 <div className="form-check" style={{ marginRight: '1rem' }}>
                                     <input
                                         className="form-check-input"
-                                        value='1'
+                                        value={1}
                                         type="radio"
                                         name="status"
                                         id="1"
-                                        onChange={(e) => setTask({ ...task, status: e.target.value })}
+                                        onChange={(e) => setTask({ ...task, status: parseInt(e.target.value) })}
                                         checked={task.status === 1}
 
                                     />
@@ -95,11 +114,11 @@ const AddTask = props => {
                                 <div className="form-check" style={{ marginRight: '1rem' }}>
                                     <input
                                         className="form-check-input"
-                                        value='2'
+                                        value={2}
                                         type="radio"
                                         name="status"
                                         id="2"
-                                        onChange={(e) => setTask({ ...task, status: e.target.value })}
+                                        onChange={(e) => setTask({ ...task, status: parseInt(e.target.value) })}
                                         checked={task.status === 2}
                                     />
                                     <label className="form-check-label" htmlFor="2">
@@ -109,7 +128,10 @@ const AddTask = props => {
                             </div>
                             <div className='flex-end'>
                                 <button type="submit" className="btn btn-primary flex-center"><ion-icon name="checkmark-done-circle-outline"></ion-icon>Update</button>
-                                <button type="submit" className="btn btn-danger flex-center"><ion-icon name="close-circle-outline"></ion-icon>Delete</button>
+                                <button type="submit" className="btn btn-danger flex-center"
+                                    onClick={() => handleRemove(task)}
+
+                                ><ion-icon name="close-circle-outline"></ion-icon>Delete</button>
                                 <button type="button" className="btn btn-light flex-center" onClick={() => { history.push('/') }}>
                                     <ion-icon name="pencil-outline"></ion-icon>Cancel</button>
                             </div>
@@ -121,9 +143,6 @@ const AddTask = props => {
         </div>
 
     )
-}
-AddTask.propTypes = {
-
 }
 
 export default AddTask
