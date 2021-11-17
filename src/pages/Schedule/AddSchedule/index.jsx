@@ -18,7 +18,7 @@ const AddSchedule = props => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatchSchedules({ type: 'ADD_SCHEDULE', schedule })
-        history.push('/')
+        history.push('/schedule')
     }
 
 
@@ -52,6 +52,31 @@ const AddSchedule = props => {
                                 required />
                         </div>
                         <div className="mb-3">
+                            <label htmlFor="creator" className="form-label">Creator</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="creator"
+                                name="creator"
+                                placeholder="Insert the creator"
+                                value={schedule.creator}
+                                onChange={(e) => setSchedule({ ...schedule, creator: e.target.value })}
+                                required />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="location" className="form-label">Location</label>
+                            <input
+                                type="text"
+                                className="form-control"
+                                id="location"
+                                name="location"
+                                placeholder="Insert the location"
+                                value={schedule.location}
+                                onChange={(e) => setSchedule({ ...schedule, location: e.target.value })}
+                                required />
+                        </div>
+                        <div className="mb-3">
+                            <label htmlFor="description" className="form-label">Description</label>
                             <textarea
                                 className="form-control"
                                 id="description"
@@ -62,53 +87,32 @@ const AddSchedule = props => {
                                 onChange={(e) => setSchedule({ ...schedule, description: e.target.value })}
                                 required />
                         </div>
-                        <div className="p-3 mb-2 bg-light text-dark">Status</div>
-                        <div className='flex-start'>
-                            <div className="form-check" style={{ marginRight: '1rem' }}>
-                                <input
-                                    className="form-check-input"
-                                    type="radio"
-                                    name="status"
-                                    value={0}
-                                    id="0"
-                                    checked={schedule.status === 0}
-                                    onChange={(e) => setSchedule({ ...schedule, status: parseInt(e.target.value) })}
-                                />
-                                <label className="form-check-label" htmlFor="0">
-                                    Now
-                                </label>
-
-                            </div>
-                            <div className="form-check" style={{ marginRight: '1rem' }}>
-                                <input
-                                    className="form-check-input"
-                                    value={1}
-                                    type="radio"
-                                    name="status"
-                                    id="1"
-                                    onChange={(e) => setSchedule({ ...schedule, status: parseInt(e.target.value) })}
-                                />
-                                <label className="form-check-label" htmlFor="1">
-                                    In process
-                                </label>
-                            </div>
-                            <div className="form-check" style={{ marginRight: '1rem' }}>
-                                <input
-                                    className="form-check-input"
-                                    value={2}
-                                    type="radio"
-                                    name="status"
-                                    id="2"
-                                    onChange={(e) => setSchedule({ ...schedule, status: parseInt(e.target.value) })}
-                                />
-                                <label className="form-check-label" htmlFor="2">
-                                    Done
-                                </label>
-                            </div>
+                        <div className="mb-3">
+                            <label htmlFor="time_start" className="form-label">Time Start</label>
+                            <input
+                                type="datetime-local"
+                                className="form-control"
+                                id="time_start"
+                                name="time_start"
+                                value={schedule.time_start}
+                                onChange={(e) => setSchedule({ ...schedule, time_start: e.target.value })}
+                                required />
                         </div>
+                        <div className="mb-3">
+                            <label htmlFor="time_start" className="form-label">Time End</label>
+                            <input
+                                type="datetime-local"
+                                className="form-control"
+                                id="time_end"
+                                name="time_end"
+                                value={schedule.time_end}
+                                onChange={(e) => setSchedule({ ...schedule, time_end: e.target.value })}
+                                required />
+                        </div>
+
                         <div className='flex-end'>
-                            <button type="submit" className="btn btn-primary flex-center"><ion-icon name="checkmark-done-circle-outline"></ion-icon>Save</button>
-                            <button type="button" className="btn btn-light flex-center" onClick={() => { history.goBack() }}>
+                            <button type="submit" className="btn btn-primary flex-center"><ion-icon name="checkmark-done-circle-outline"></ion-icon>Update</button>
+                            <button type="button" className="btn btn-light flex-center" onClick={() => { history.push('/schedule') }}>
                                 <ion-icon name="pencil-outline"></ion-icon>Cancel</button>
                         </div>
                     </form>

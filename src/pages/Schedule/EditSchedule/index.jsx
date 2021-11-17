@@ -25,14 +25,7 @@ const EditSchedule = props => {
         history.push('/schedule')
     }
 
-    const handleRemove = (schedule) => {
-        var r = window.confirm(`Are you want to remove ${schedule.title}`)
-        if (r) {
-            dispatchSchedules({ type: 'REMOVE_SCHEDULE', id: schedule.id })
-            history.push('/schedule')
-        }
 
-    }
     const scheduleView = schedules.filter(item => item.id === id)
     useEffect(() => {
         setSchedule({
@@ -189,11 +182,7 @@ const EditSchedule = props => {
 
                             <div className='flex-end'>
                                 <button type="submit" className="btn btn-primary flex-center"><ion-icon name="checkmark-done-circle-outline"></ion-icon>Update</button>
-                                <button type="submit" className="btn btn-danger flex-center"
-                                    onClick={() => handleRemove(schedule)}
-
-                                ><ion-icon name="close-circle-outline"></ion-icon>Delete</button>
-                                <button type="button" className="btn btn-light flex-center" onClick={() => { history.push('/') }}>
+                                <button type="button" className="btn btn-light flex-center" onClick={() => { history.push('/schedule') }}>
                                     <ion-icon name="pencil-outline"></ion-icon>Cancel</button>
                             </div>
                         </form>

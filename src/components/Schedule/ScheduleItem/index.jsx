@@ -1,8 +1,18 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
+import { Context } from '../../../store/context/Context';
 const ScheduleItem = (props) => {
+    const { dispatchSchedules } = useContext(Context);
+
     const { schedule } = props
+    const handleRemove = () => {
+        var r = window.confirm(`Are you want to remove ${schedule.title}`)
+        if (r) {
+            dispatchSchedules({ type: 'REMOVE_SCHEDULE', id: schedule.id })
+        }
+
+    }
     return (
         <tr>
             <th scope="row">
@@ -46,7 +56,7 @@ const ScheduleItem = (props) => {
                     type="submit"
                     className="btn btn-danger flex-center"
                     style={{ marginRight: '1rem' }}
-                    
+                    onClick={() => handleRemove()}
                 >
                     <ion-icon name="trash-outline"></ion-icon>Delete</button>
             </td>

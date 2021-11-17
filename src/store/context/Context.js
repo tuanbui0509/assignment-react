@@ -54,8 +54,8 @@ const initialSchedule = [
         description: 'Release overview',
         creator: 'Le Cao',
         location: 'New York',
-        time_start: moment(new Date()).format('DD/MM/yyyy HH:mm:ss'),
-        time_end: moment(new Date()).format('DD/MM/yyyy HH:mm:ss'),
+        time_start: new Date(),
+        time_end: new Date(),
     },
     {
         id: '0fc5b988-46cd-11ec-81d3-0242bc130004',
@@ -63,8 +63,8 @@ const initialSchedule = [
         description: 'Startup',
         creator: 'Son Dang',
         location: 'New York',
-        time_start: moment(new Date()).format('DD/MM/yyyy HH:mm:ss'),
-        time_end: moment(new Date()).format('DD/MM/yyyy HH:mm:ss'),
+        time_start: new Date(),
+        time_end: new Date(),
     },
 
 ]

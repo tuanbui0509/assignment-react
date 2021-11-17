@@ -4,6 +4,7 @@ import { Table } from 'reactstrap'
 import ScheduleItem from '../../components/Schedule/ScheduleItem'
 import ScheduleList from '../../components/Schedule/ScheduleList'
 import { Context } from '../../store/context/Context'
+import { Link } from 'react-router-dom'
 
 const Schedule = props => {
     const { schedules, dispatchSchedules } = useContext(Context);
@@ -23,9 +24,15 @@ const Schedule = props => {
     }
 
     return (
-        <ScheduleList>
-            {showListSchedule()}
-        </ScheduleList>
+        <>
+            <div className='container'>
+                <Link to='/schedule/add' className="btn btn-primary">Add Schedule</Link>
+            </div>
+            <ScheduleList>
+                {showListSchedule()}
+            </ScheduleList>
+
+        </>
     )
 }
 
