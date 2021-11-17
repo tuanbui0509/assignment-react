@@ -104,7 +104,7 @@ const AddTask = props => {
                             </div>
                         </div>
                         <div className='flex-end'>
-                            <button type="submit" className="btn btn-primary flex-center"><ion-icon name="checkmark-done-circle-outline"></ion-icon>Save</button>
+                            <button type="submit" className="btn btn-primary flex-center mr-1"><ion-icon name="checkmark-done-circle-outline"></ion-icon>Save</button>
                             <button type="button" className="btn btn-light flex-center" onClick={() => { history.goBack() }}>
                                 <ion-icon name="pencil-outline"></ion-icon>Cancel</button>
                         </div>

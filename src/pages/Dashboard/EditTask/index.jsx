@@ -23,7 +23,7 @@ const AddTask = props => {
             dispatchTasks({ type: 'REMOVE_TASK', id: task.id })
             history.push('/')
         }
-       
+
     }
     const taskView = tasks.filter(item => item.id === id)
     useEffect(() => {
@@ -127,8 +127,8 @@ const AddTask = props => {
                                 </div>
                             </div>
                             <div className='flex-end'>
-                                <button type="submit" className="btn btn-primary flex-center"><ion-icon name="checkmark-done-circle-outline"></ion-icon>Update</button>
-                                <button type="submit" className="btn btn-danger flex-center"
+                                <button type="submit" className="btn btn-primary flex-center mr-1"><ion-icon name="checkmark-done-circle-outline"></ion-icon>Update</button>
+                                <button type="submit" className="btn btn-danger flex-center mr-1"
                                     onClick={() => handleRemove(task)}
 
                                 ><ion-icon name="close-circle-outline"></ion-icon>Delete</button>

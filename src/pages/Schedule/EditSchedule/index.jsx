@@ -164,7 +164,7 @@ const EditSchedule = props => {
                                     className="form-control"
                                     id="time_start"
                                     name="time_start"
-                                    value={schedule.time_start}
+                                    value={moment(schedule.time_start).format('YYYY-MM-DDThh:mm')}
                                     onChange={(e) => setSchedule({ ...schedule, time_start: e.target.value })}
                                     required />
                             </div>
@@ -175,7 +175,7 @@ const EditSchedule = props => {
                                     className="form-control"
                                     id="time_end"
                                     name="time_end"
-                                    value={schedule.time_end}
+                                    value={moment(schedule.time_end).format('YYYY-MM-DDThh:mm')}
                                     onChange={(e) => setSchedule({ ...schedule, time_end: e.target.value })}
                                     required />
                             </div>
