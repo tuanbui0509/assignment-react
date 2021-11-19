@@ -68,6 +68,8 @@ const Task = props => {
 
 Task.propTypes = {
     title: PropTypes.string,
+    color: PropTypes.string,
+    icon: PropTypes.string,
     tasks: PropTypes.array
 }
 

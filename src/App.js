@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import Menu from './components/Navbar';
 import routes from './routes/router';
@@ -24,11 +24,13 @@ const App = () => {
     <ContextProvider>
       <Router>
         <Menu />
-        <div className="container mt-2">
-          <div className="row">
-            {showContentMenus(routes)}
+        <Suspense fallback={<p style={{ fontSize: '24px', textAlign: 'center' }}>Loading....</p>}>
+          <div className="container mt-2">
+            <div className="row">
+              {showContentMenus(routes)}
+            </div>
           </div>
-        </div>
+        </Suspense>
       </Router>
     </ContextProvider>
 

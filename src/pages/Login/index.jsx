@@ -1,7 +1,6 @@
-import React, { useState, useEffect, useContext } from 'react'
-import PropTypes from 'prop-types'
+import React, { useContext, useState } from 'react';
+import { useHistory } from 'react-router-dom';
 import { Context } from '../../store/context/Context';
-import { useHistory } from 'react-router-dom'
 const Login = props => {
     const initialValues = { email: "", password: "" };
     const history = useHistory()
@@ -9,11 +8,6 @@ const Login = props => {
     const [formErrors, setFormErrors] = useState({});
     const [isSubmitting, setIsSubmitting] = useState(false);
     const { dispatchLogin, users, login } = useContext(Context);
-    const submit = () => {
-        console.log(formValues);
-    };
-
-    //form submission handler
     const handleSubmit = (e) => {
         e.preventDefault();
         setFormErrors(validate(formValues));
@@ -30,7 +24,6 @@ const Login = props => {
     const verifyLogin = () => {
         return users.filter(user => user.password === formValues.password && user.email === formValues.email);
     }
-    //form validation handler
     const validate = (values) => {
         let errors = {};
         const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
@@ -49,11 +42,6 @@ const Login = props => {
         return errors;
     };
 
-    useEffect(() => {
-        if (Object.keys(formErrors).length === 0 && isSubmitting) {
-            submit();
-        }
-    }, [formErrors]);
     const handleLogout = () => {
         dispatchLogin({ type: 'LOGOUT', user: null })
     }

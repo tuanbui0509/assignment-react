@@ -1,5 +1,4 @@
-import React, { useState, useContext } from 'react'
-import PropTypes from 'prop-types'
+import React, { useContext, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { Context } from '../../../store/context/Context';
 const AddSchedule = props => {
@@ -105,6 +104,7 @@ const AddSchedule = props => {
                                 className="form-control"
                                 id="time_end"
                                 name="time_end"
+                                min={schedule.time_start}
                                 value={schedule.time_end}
                                 onChange={(e) => setSchedule({ ...schedule, time_end: e.target.value })}
                                 required />

@@ -1,10 +1,9 @@
-import React, { useState, useContext } from 'react'
-import PropTypes from 'prop-types'
+import React, { useContext, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { Context } from '../../../store/context/Context';
 const AddTask = props => {
     const history = useHistory();
-    const { tasks, dispatchTasks } = useContext(Context);
+    const { dispatchTasks } = useContext(Context);
 
     const [task, setTask] = useState({
         title: '',
@@ -117,10 +116,6 @@ const AddTask = props => {
         </div>
 
     )
-}
-
-AddTask.propTypes = {
-
 }
 
 export default AddTask

@@ -36,7 +36,6 @@ const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
     else {
         paths = to
     }
-    console.log(paths);
     return (
         <Route
             path={paths}

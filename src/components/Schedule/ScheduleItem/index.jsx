@@ -7,7 +7,7 @@ const ScheduleItem = (props) => {
 
     const { schedule } = props
     const handleRemove = () => {
-        var r = window.confirm(`Are you want to remove ${schedule.title}`)
+        var r = window.confirm(`Are you want to remove ${schedule.title} of ${schedule.creator}`)
         if (r) {
             dispatchSchedules({ type: 'REMOVE_SCHEDULE', id: schedule.id })
         }

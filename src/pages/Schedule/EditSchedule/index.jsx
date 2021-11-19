@@ -1,10 +1,8 @@
-import React, { useState, useContext, useEffect } from 'react'
-import PropTypes from 'prop-types'
+import moment from 'moment';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from "react-router-dom";
-import { Context } from '../../../store/context/Context';
 import { Table } from 'reactstrap';
-import moment from 'moment'
-import Datetime from 'react-datetime';
+import { Context } from '../../../store/context/Context';
 const EditSchedule = props => {
     const history = useHistory();
     const { schedules, dispatchSchedules } = useContext(Context);
@@ -26,8 +24,8 @@ const EditSchedule = props => {
     }
 
 
-    const scheduleView = schedules.filter(item => item.id === id)
     useEffect(() => {
+        const scheduleView = schedules.filter(item => item.id === id)
         setSchedule({
             id: scheduleView[0].id,
             title: scheduleView[0].title,
@@ -37,11 +35,8 @@ const EditSchedule = props => {
             time_start: scheduleView[0].time_start,
             time_end: scheduleView[0].time_end
         })
-    }, [])
+    }, [id, schedules])
 
-    const handleChange = (e) => {
-        setSchedule({ ...schedule, time_end: e.target.value })
-    }
     return (
         <div>
             <button
@@ -164,6 +159,7 @@ const EditSchedule = props => {
                                     className="form-control"
                                     id="time_start"
                                     name="time_start"
+                                    max={schedule.time_end}
                                     value={moment(schedule.time_start).format('YYYY-MM-DDThh:mm')}
                                     onChange={(e) => setSchedule({ ...schedule, time_start: e.target.value })}
                                     required />
@@ -175,6 +171,7 @@ const EditSchedule = props => {
                                     className="form-control"
                                     id="time_end"
                                     name="time_end"
+                                    min={schedule.time_start}
                                     value={moment(schedule.time_end).format('YYYY-MM-DDThh:mm')}
                                     onChange={(e) => setSchedule({ ...schedule, time_end: e.target.value })}
                                     required />

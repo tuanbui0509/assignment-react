@@ -32,7 +32,7 @@ const UserItem = (props) => {
         }
         else {
             var r = window.confirm(`Are you want to remove ${user?.name}`)
-            if (r == true) {
+            if (r) {
                 setIsEditing(false)
                 dispatchUsers({ type: 'REMOVE_USER', id: user.id })
             } else {

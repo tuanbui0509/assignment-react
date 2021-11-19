@@ -1,13 +1,13 @@
 import React from 'react';
-import Dashboard from '../pages/Dashboard/'
-import User from '../pages/User'
-import Login from '../pages/Login'
-import Schedule from '../pages/Schedule';
-import NotFound from '../pages/NotFound';
-import AddTask from '../pages/Dashboard/AddTask';
-import EditTask from '../pages/Dashboard/EditTask';
-import AddSchedule from '../pages/Schedule/AddSchedule';
-import EditSchedule from '../pages/Schedule/EditSchedule';
+const Schedule = React.lazy(() => import("../pages/Schedule"));
+const AddSchedule = React.lazy(() => import("../pages/Schedule/AddSchedule"));
+const EditSchedule = React.lazy(() => import("../pages/Schedule/EditSchedule"));
+const EditTask = React.lazy(() => import("../pages/Dashboard/EditTask"));
+const AddTask = React.lazy(() => import("../pages/Dashboard/AddTask"));
+const NotFound = React.lazy(() => import("../pages/NotFound"));
+const Login = React.lazy(() => import("../pages/Login"));
+const User = React.lazy(() => import("../pages/User"));
+const Dashboard = React.lazy(() => import("../pages/Dashboard"));
 
 const routes = [
     {

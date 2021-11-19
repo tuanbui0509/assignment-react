@@ -1,11 +1,10 @@
-import React, { useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
+import React, { useContext, useState } from 'react'
 import UserItem from '../../components/User/UserItem'
 import UserList from '../../components/User/UserList'
 import { Context } from '../../store/context/Context'
 const User = props => {
     const [isAdd, setIsAdd] = useState(false)
-    const { users, dispatchUsers } = useContext(Context);
+    const { users } = useContext(Context);
 
     return (
         <div className="container">

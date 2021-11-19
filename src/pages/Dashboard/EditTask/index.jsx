@@ -1,12 +1,13 @@
-import React, { useContext, useState, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from "react-router-dom";
-import { Context } from '../../../store/context/Context'
+import { Context } from '../../../store/context/Context';
 
 const AddTask = props => {
     const history = useHistory();
     const { id } = useParams()
     const { tasks, dispatchTasks } = useContext(Context);
     const [task, setTask] = useState({
+        id: '',
         title: '',
         description: '',
         status: 0
@@ -25,21 +26,22 @@ const AddTask = props => {
         }
 
     }
-    const taskView = tasks.filter(item => item.id === id)
+
     useEffect(() => {
+        let taskView = tasks.filter(item => item.id === id)
         setTask({
             id: taskView[0].id,
             title: taskView[0].title,
             description: taskView[0].description,
             status: taskView[0].status
         })
-    }, [])
+    }, [id, tasks])
     return (
         <div>
             <button
                 type="button"
                 className="btn btn-danger flex-center"
-                onClick={() => { dispatchTasks({ type: 'GET_TASKS' }); history.goBack() }}
+                onClick={() => { history.goBack() }}
             >
                 <ion-icon name="arrow-back-circle"></ion-icon>Back
             </button>
@@ -52,8 +54,8 @@ const AddTask = props => {
                 </nav>
                 <div className="tab-content" id="nav-tabContent">
                     <div className="tab-pane fade show active" id="nav-view" role="tabpanel" aria-labelledby="nav-view-tab">
-                        <h5>{taskView[0].title}</h5>
-                        <p>{taskView[0].description}</p>
+                        <h5>{task.title}</h5>
+                        <p>{task.description}</p>
                     </div>
                     <div className="tab-pane fade" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
                         <form onSubmit={handleSubmit}>

@@ -1,4 +1,3 @@
-import moment from 'moment';
 import React, { createContext, useReducer } from 'react';
 const Context = createContext(null)
 const user_icon = require('../../assets/images/icon-user.png').default
@@ -58,8 +57,8 @@ const initialSchedule = [
         time_end: new Date(),
     },
     {
-        id: '0fc5b988-46cd-11ec-81d3-0242bc130004',
-        title: 'Meeting',
+        id: '0ac07e96-46cd-11ec-81d3-0242bc130004',
+        title: 'Training',
         description: 'Startup',
         creator: 'Son Dang',
         location: 'New York',
@@ -121,7 +120,7 @@ const initialUser = [
 
 ]
 const TaskReducer = (state, action) => {
-    let id = -1, index, task
+    let index, task
     switch (action.type) {
         case 'GET_TASKS':
             return state
@@ -154,7 +153,7 @@ const TaskReducer = (state, action) => {
 }
 
 const UserReducer = (state, action) => {
-    let id = -1, index, user
+    let index, user
     switch (action.type) {
         case 'GET_USERS':
             return state
@@ -187,7 +186,7 @@ const UserReducer = (state, action) => {
 }
 
 const ScheduleReducer = (state, action) => {
-    let id = -1, index, schedule
+    let index, schedule
     switch (action.type) {
         case 'GET_SCHEDULES':
             return state
@@ -236,14 +235,12 @@ const LoginReducer = (state, action) => {
     }
 }
 
+
 function create_UUID() {
-    var dt = new Date().getTime();
-    var uuid = 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-        var r = (dt + Math.random() * 16) % 16 | 0;
-        dt = Math.floor(dt / 16);
-        return (c === 'x' ? r : (r & 0x3 | 0x8)).toString(16);
-    });
-    return uuid;
+    var temp_url = URL.createObjectURL(new Blob());
+    var uuid = temp_url.toString();
+    URL.revokeObjectURL(temp_url);
+    return uuid.substr(uuid.lastIndexOf('/') + 1); 
 }
 
 

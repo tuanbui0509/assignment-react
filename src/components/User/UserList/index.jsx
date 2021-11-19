@@ -1,5 +1,4 @@
 import React from 'react'
-import { Link } from 'react-router-dom'
 import UserItem from '../UserItem'
 const UserList = (props) => {
     const { users } = props
@@ -7,7 +6,7 @@ const UserList = (props) => {
         let result = null
         result = users.map((user, index) => {
             return <UserItem
-                index={index}
+                key={index}
                 user={user}
             />;
         })

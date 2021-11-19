@@ -1,10 +1,9 @@
-import React, { useContext, useEffect } from 'react'
-import PropTypes from 'prop-types'
-import Task from '../Task'
+import React, { useContext } from 'react'
 import { Context } from '../../../store/context/Context'
+import Task from '../Task'
 
 const TaskList = (props) => {
-    const { tasks, dispatchTasks } = useContext(Context);
+    const { tasks } = useContext(Context);
     return (
         <div className="row align-items-start ">
             <div className="col col-4">
