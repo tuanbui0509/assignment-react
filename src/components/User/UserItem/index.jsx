@@ -90,7 +90,7 @@ const UserItem = (props) => {
                 <div className="card text-center">
                     {user && !isEditing ?
                         <div className="card-header bg-primary text-white flex-center">
-                            <ion-icon name="person"></ion-icon> {user.name}
+                            <ion-icon class='btn-icon' name="person"></ion-icon> {user.name}
                         </div> :
                         <>
                             <div className="card-header bg-primary text-white flex-center">
@@ -161,30 +161,29 @@ const UserItem = (props) => {
                             <button
                                 type="button"
                                 className="btn btn-outline-success flex-center"
-                                style={{ marginRight: '1rem' }}
+                                style={{ marginRight: '0.5rem', padding: '5px 10px' }}
                                 onClick={() => handleEdit(user)}
                             >
-                                <ion-icon name="pencil-outline"></ion-icon>Edit</button> :
+                                <ion-icon class='btn-icon' name="pencil-outline"></ion-icon>Edit</button> :
                             <>
                                 <button type="button"
                                     className="btn btn-outline-secondary flex-center"
-                                    style={{ marginRight: '1rem' }}
+                                    style={{ marginRight: '0.5rem', padding: '5px 10px' }}
                                     onClick={() => handleCancel()}
                                 >
-                                    <ion-icon name="pencil-outline"></ion-icon>Cancel</button>
+                                    <ion-icon class='btn-icon' name="pencil-outline"></ion-icon>Cancel</button>
                                 <button
                                     type="submit"
                                     className="btn btn-outline-success flex-center"
-                                    style={{ marginRight: '1rem' }}
+                                    style={{ marginRight: '0.5rem', padding: '5px 10px' }}
                                 >
-                                    <ion-icon name="pencil-outline"></ion-icon>Update</button>
+                                    <ion-icon class='btn-icon' name="pencil-outline"></ion-icon>Update</button>
                             </>
                         }
                         <button
-                            className="btn btn-danger flex-center"
-                            onClick={() => handleRemove(user)}
-                        >
-                            <ion-icon name="close-outline"></ion-icon>Remove</button>
+                            className="btn btn-danger flex-center" style={{ padding: '5px' }}
+                            onClick={() => handleRemove(user)}>
+                            <ion-icon class='btn-icon' name="close-outline"></ion-icon>Remove</button>
                     </div>
                 </div>
             </form>

@@ -21,7 +21,7 @@ const Schedule = props => {
     return (
         <>
             <div className='container'>
-                <Link to='/schedule/add' className="btn btn-primary"><ion-icon name="calendar-outline"></ion-icon>Add Schedule</Link>
+                <Link to='/schedule/add' className="btn btn-primary d-flex align-items-center" style={{ width: '155px'}}><ion-icon class='btn-icon' name="calendar-outline"></ion-icon>Add Schedule</Link>
             </div>
             <ScheduleList>
                 {showListSchedule()}

@@ -1,7 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from "react-router-dom";
 import { toast } from 'react-toastify';
-import ToastNotification from '../../../components/Toast';
 import { Context } from '../../../store/context/Context';
 const AddTask = props => {
     const history = useHistory();
@@ -28,7 +27,7 @@ const AddTask = props => {
                 className="btn btn-danger flex-center"
                 onClick={() => { history.goBack() }}
             >
-                <ion-icon name="arrow-back-circle"></ion-icon>Back
+                <ion-icon  class='btn-icon' name="arrow-back-circle"></ion-icon>Back
             </button>
             <ul className="nav nav-tabs justify-content-end" id="myTab" role="tablist">
                 <li className="nav-item" role="presentation">
@@ -106,9 +105,9 @@ const AddTask = props => {
                             </div>
                         </div>
                         <div className='flex-end'>
-                            <button type="submit" className="btn btn-primary flex-center mr-1"><ion-icon name="add-circle-outline"></ion-icon>Add</button>
+                            <button type="submit" className="btn btn-primary flex-center mr-1"><ion-icon  class='btn-icon' name="add-circle-outline"></ion-icon>Add</button>
                             <button type="button" className="btn btn-light flex-center" onClick={() => { history.goBack() }}>
-                                <ion-icon name="close-circle-outline"></ion-icon>Cancel</button>
+                                <ion-icon  class='btn-icon' name="close-circle-outline"></ion-icon>Cancel</button>
                         </div>
                     </form>
 

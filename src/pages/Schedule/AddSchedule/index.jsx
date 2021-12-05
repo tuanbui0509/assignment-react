@@ -32,7 +32,7 @@ const AddSchedule = props => {
                 className="btn btn-danger flex-center"
                 onClick={() => { history.goBack() }}
             >
-                <ion-icon name="arrow-back-circle"></ion-icon>Back
+                <ion-icon  class='btn-icon' name="arrow-back-circle"></ion-icon>Back
             </button>
             <ul className="nav nav-tabs justify-content-end" id="myTab" role="tablist">
                 <li className="nav-item" role="presentation">
@@ -115,9 +115,9 @@ const AddSchedule = props => {
                         </div>
 
                         <div className='flex-end'>
-                            <button type="submit" className="btn btn-primary flex-center"><ion-icon name="add-circle-outline"></ion-icon>Add</button>
+                            <button type="submit" className="btn btn-primary flex-center"><ion-icon  class='btn-icon' name="add-circle-outline"></ion-icon>Add</button>
                             <button type="button" className="btn btn-light flex-center" onClick={() => { history.push('/schedule') }}>
-                                <ion-icon name="pencil-outline"></ion-icon>Cancel</button>
+                                <ion-icon  class='btn-icon' name="pencil-outline"></ion-icon>Cancel</button>
                         </div>
                     </form>
 

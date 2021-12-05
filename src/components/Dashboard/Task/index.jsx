@@ -55,7 +55,7 @@ const Task = props => {
                         </li>
                     })}
                     {title === 'New Tasks' ? <Link to='/dashboard/add' className="btn btn-primary d-flex align-items-center" style={{ width: '100px', marginTop: '1rem' }}>
-                        <ion-icon name="list" style={{ fontSize: '25px', marginRight: '0.5rem' }}></ion-icon>
+                        <ion-icon name="list" class='btn-icon'></ion-icon>
                         Add
                     </Link> : null}
                 </ul>

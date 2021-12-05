@@ -117,9 +117,6 @@ const Login = props => {
                                 <span className="error">{formErrors.password}</span>
                             )}
                         </div>
-                        {/* {Object.keys(formErrors).length === 0 && isSubmitting && (
-                            <span className="fail-msg">Login Failure</span>
-                        )} */}
                         <button type="submit" className='btn btn-success m-auto text-center d-block'>Sign In</button>
                     </form>
                 </div>

@@ -44,7 +44,7 @@ const ScheduleItem = (props) => {
                     className="btn btn-primary flex-center"
                     style={{ marginRight: '1rem' }}
                 >
-                    <ion-icon name="information-circle-outline"></ion-icon>Detail</Link>
+                    <ion-icon  class='btn-icon' name="information-circle-outline"></ion-icon>Detail</Link>
             </td>
             <td>
                 <Link
@@ -53,7 +53,7 @@ const ScheduleItem = (props) => {
                     className="btn btn-primary flex-center"
                     style={{ marginRight: '1rem' }}
                 >
-                    <ion-icon name="checkbox-outline"></ion-icon>Edit</Link>
+                    <ion-icon  class='btn-icon' name="checkbox-outline"></ion-icon>Edit</Link>
             </td>
             <td>
                 <button
@@ -62,7 +62,7 @@ const ScheduleItem = (props) => {
                     style={{ marginRight: '1rem' }}
                     onClick={() => handleRemove()}
                 >
-                    <ion-icon name="trash-outline"></ion-icon>Delete</button>
+                    <ion-icon  class='btn-icon' name="trash-outline"></ion-icon>Delete</button>
             </td>
         </tr>
     )

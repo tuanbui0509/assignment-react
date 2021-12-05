@@ -61,7 +61,7 @@ const Menu = () => {
                         {showMenus(menus)}
                     </nav>
                 </div>
-                {login ? <span>{login.email}</span> : null}
+                {login ? <span className='flex-center'><ion-icon name="person-circle-outline"></ion-icon>Username: {login.email}</span> : null}
             </div>
         </nav>
     )

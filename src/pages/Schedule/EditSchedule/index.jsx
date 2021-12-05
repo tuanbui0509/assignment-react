@@ -48,7 +48,7 @@ const EditSchedule = props => {
                 className="btn btn-danger flex-center"
                 onClick={() => { history.goBack() }}
             >
-                <ion-icon name="arrow-back-circle"></ion-icon>Back
+                <ion-icon  class='btn-icon' name="arrow-back-circle"></ion-icon>Back
             </button>
             <div>
                 <nav>
@@ -182,9 +182,9 @@ const EditSchedule = props => {
                             </div>
 
                             <div className='flex-end'>
-                                <button type="submit" className="btn btn-primary flex-center"><ion-icon name="checkmark-done-circle-outline"></ion-icon>Update</button>
+                                <button type="submit" className="btn btn-primary flex-center"><ion-icon  class='btn-icon' name="checkmark-done-circle-outline"></ion-icon>Update</button>
                                 <button type="button" className="btn btn-light flex-center" onClick={() => { history.push('/schedule') }}>
-                                    <ion-icon name="pencil-outline"></ion-icon>Cancel</button>
+                                    <ion-icon  class='btn-icon' name="pencil-outline"></ion-icon>Cancel</button>
                             </div>
                         </form>
                     </div>

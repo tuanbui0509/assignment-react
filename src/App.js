@@ -1,7 +1,6 @@
-import React, { Suspense } from "react";
+import React from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
-import Loading from "./components/LoadingHOC";
 import Menu from './components/Navbar';
 import routes from './routes/router';
 import { ContextProvider } from "./store/context/Context";

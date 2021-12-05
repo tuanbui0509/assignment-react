@@ -50,7 +50,7 @@ const AddTask = props => {
                 className="btn btn-danger flex-center"
                 onClick={() => { history.goBack() }}
             >
-                <ion-icon name="arrow-back-circle"></ion-icon>Back
+                <ion-icon  class='btn-icon' name="arrow-back-circle"></ion-icon>Back
             </button>
             <div>
                 <nav>
@@ -136,13 +136,13 @@ const AddTask = props => {
                                 </div>
                             </div>
                             <div className='flex-end'>
-                                <button type="submit" className="btn btn-primary flex-center mr-1"><ion-icon name="checkmark-done-circle-outline"></ion-icon>Update</button>
+                                <button type="submit" className="btn btn-primary flex-center mr-1"><ion-icon  class='btn-icon' name="checkmark-done-circle-outline"></ion-icon>Update</button>
                                 <button type="submit" className="btn btn-danger flex-center mr-1"
                                     onClick={() => handleRemove(task)}
 
-                                ><ion-icon name="trash-outline"></ion-icon>Delete</button>
+                                ><ion-icon  class='btn-icon' name="trash-outline"></ion-icon>Delete</button>
                                 <button type="button" className="btn btn-light flex-center" onClick={() => { history.push('/') }}>
-                                    <ion-icon name="close-circle-outline"></ion-icon>Cancel</button>
+                                    <ion-icon  class='btn-icon' name="close-circle-outline"></ion-icon>Cancel</button>
                             </div>
                         </form>
                     </div>
