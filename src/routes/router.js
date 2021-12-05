@@ -1,13 +1,14 @@
-import React from 'react';
-const Schedule = React.lazy(() => import("../pages/Schedule"));
-const AddSchedule = React.lazy(() => import("../pages/Schedule/AddSchedule"));
-const EditSchedule = React.lazy(() => import("../pages/Schedule/EditSchedule"));
-const EditTask = React.lazy(() => import("../pages/Dashboard/EditTask"));
-const AddTask = React.lazy(() => import("../pages/Dashboard/AddTask"));
-const NotFound = React.lazy(() => import("../pages/NotFound"));
-const Login = React.lazy(() => import("../pages/Login"));
-const User = React.lazy(() => import("../pages/User"));
-const Dashboard = React.lazy(() => import("../pages/Dashboard"));
+import React from 'react'
+import Loading from '../components/LoadingHOC'
+const Schedule = Loading(React.lazy(() => import("../pages/Schedule")))
+const AddSchedule = Loading(React.lazy(() => import("../pages/Schedule/AddSchedule")))
+const EditSchedule = Loading(React.lazy(() => import("../pages/Schedule/EditSchedule")))
+const EditTask = Loading(React.lazy(() => import("../pages/Dashboard/EditTask")))
+const AddTask = Loading(React.lazy(() => import("../pages/Dashboard/AddTask")))
+const NotFound = Loading(React.lazy(() => import("../pages/NotFound")))
+const Login = Loading(React.lazy(() => import("../pages/Login")))
+const User = Loading(React.lazy(() => import("../pages/User")))
+const Dashboard = Loading(React.lazy(() => import("../pages/Dashboard")))
 
 const routes = [
     {
@@ -55,6 +56,6 @@ const routes = [
         exact: true,
         main: () => <NotFound />
     }
-];
+]
 
-export default routes;
+export default routes

@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { Context } from '../../store/context/Context';
 const Login = props => {
     const initialValues = { email: "", password: "" };
@@ -13,11 +14,16 @@ const Login = props => {
         setFormErrors(validate(formValues));
         let result = verifyLogin()
         if (result.length > 0) {
-            console.log(result);
             dispatchLogin({ type: 'LOGIN', user: result[0] })
             history.push('/')
+            toast.success("Login Successful !", {
+                position: toast.POSITION.TOP_RIGHT
+            });
         } else {
             setIsSubmitting(true);
+            toast.error("Login Failure !", {
+                position: toast.POSITION.TOP_RIGHT
+            });
         }
 
     };
@@ -44,6 +50,9 @@ const Login = props => {
 
     const handleLogout = () => {
         dispatchLogin({ type: 'LOGOUT', user: null })
+        toast.success("You Logout Successful !", {
+            position: toast.POSITION.TOP_RIGHT
+        });
     }
 
     return (
@@ -108,9 +117,9 @@ const Login = props => {
                                 <span className="error">{formErrors.password}</span>
                             )}
                         </div>
-                        {Object.keys(formErrors).length === 0 && isSubmitting && (
+                        {/* {Object.keys(formErrors).length === 0 && isSubmitting && (
                             <span className="fail-msg">Login Failure</span>
-                        )}
+                        )} */}
                         <button type="submit" className='btn btn-success m-auto text-center d-block'>Sign In</button>
                     </form>
                 </div>

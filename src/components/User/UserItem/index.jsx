@@ -1,5 +1,6 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
+import { toast } from 'react-toastify'
 import { Context } from '../../../store/context/Context'
 const user_icon = require('../../../assets/images/icon-user.png').default
 
@@ -31,10 +32,13 @@ const UserItem = (props) => {
             props.setIsAdd(false)
         }
         else {
-            var r = window.confirm(`Are you want to remove ${user?.name}`)
-            if (r) {
+            var confirm = window.confirm(`Are you want to remove ${user?.name}`)
+            if (confirm) {
                 setIsEditing(false)
                 dispatchUsers({ type: 'REMOVE_USER', id: user.id })
+                toast.success("Remove User Successful !", {
+                    position: toast.POSITION.TOP_RIGHT
+                });
             } else {
             }
         }
@@ -59,8 +63,18 @@ const UserItem = (props) => {
             return
         }
         console.log(userEditing.id);
-        if (userEditing.id === '') dispatchUsers({ type: 'ADD_USER', user: userEditing })
-        else dispatchUsers({ type: 'UPDATE_USER', user: userEditing })
+        if (userEditing.id === '') {
+            dispatchUsers({ type: 'ADD_USER', user: userEditing })
+            toast.success("Add User Successful !", {
+                position: toast.POSITION.TOP_RIGHT
+            });
+        }
+        else {
+            dispatchUsers({ type: 'UPDATE_USER', user: userEditing })
+            toast.success("Update User Successful !", {
+                position: toast.POSITION.TOP_RIGHT
+            });
+        }
         if (!user) {
             props.setIsAdd(false)
         } else setIsEditing(false)
@@ -103,7 +117,7 @@ const UserItem = (props) => {
                                     }}
                                 />
                             </div>
-                            {validate.name ? <p>You need enter to Name</p> : null}
+                            {validate.name ? <p className='bg-danger p-2 text-white'>You need enter to Name</p> : null}
                         </>
                     }
 
@@ -137,14 +151,12 @@ const UserItem = (props) => {
                                         setUserEditing({ ...userEditing, position: e.target.value })
                                     }}
                                 />
-                                {validate.position ? <p>You need enter to Position</p> : null}
+                                {validate.position ? <p className='bg-danger p-2 text-white'>You need enter to Position</p> : null}
                             </>
                         }
                         <Link to="/schedule" className="btn btn-primary m-2">Schedule</Link>
                     </div>
                     <div className="card-footer flex-center">
-
-
                         {user && !isEditing ?
                             <button
                                 type="button"

@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { Fragment } from 'react'
 import UserItem from '../UserItem'
 const UserList = (props) => {
     const { users } = props
@@ -14,9 +14,9 @@ const UserList = (props) => {
     }
 
     return (
-        <>
+        <Fragment>
             {showUsers()}
-        </>
+        </Fragment>
     )
 }
 

@@ -1,5 +1,7 @@
 import React, { Suspense } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { ToastContainer } from "react-toastify";
+import Loading from "./components/LoadingHOC";
 import Menu from './components/Navbar';
 import routes from './routes/router';
 import { ContextProvider } from "./store/context/Context";
@@ -24,13 +26,15 @@ const App = () => {
     <ContextProvider>
       <Router>
         <Menu />
-        <Suspense fallback={<p style={{ fontSize: '24px', textAlign: 'center' }}>Loading....</p>}>
-          <div className="container mt-2">
-            <div className="row">
-              {showContentMenus(routes)}
-            </div>
+        <div className="container mt-2">
+          <div className="row">
+            {showContentMenus(routes)}
           </div>
-        </Suspense>
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+          />
+        </div>
       </Router>
     </ContextProvider>
 

@@ -2,14 +2,18 @@ import React, { useContext } from 'react'
 import moment from 'moment'
 import { Link } from 'react-router-dom'
 import { Context } from '../../../store/context/Context';
+import { toast } from 'react-toastify';
 const ScheduleItem = (props) => {
     const { dispatchSchedules } = useContext(Context);
 
     const { schedule } = props
     const handleRemove = () => {
-        var r = window.confirm(`Are you want to remove ${schedule.title} of ${schedule.creator}`)
-        if (r) {
+        var confirm = window.confirm(`Are you want to remove ${schedule.title} of ${schedule.creator}`)
+        if (confirm) {
             dispatchSchedules({ type: 'REMOVE_SCHEDULE', id: schedule.id })
+            toast.success("Delete Schedule Successful !", {
+                position: toast.POSITION.TOP_RIGHT
+            });
         }
 
     }

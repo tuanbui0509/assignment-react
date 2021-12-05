@@ -1,5 +1,6 @@
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from "react-router-dom";
+import { toast } from 'react-toastify';
 import { Context } from '../../../store/context/Context';
 
 const AddTask = props => {
@@ -16,12 +17,18 @@ const AddTask = props => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatchTasks({ type: 'UPDATE_TASK', task })
+        toast.success("Edit Task Successful !", {
+            position: toast.POSITION.TOP_RIGHT
+        });
         history.push('/')
     }
     const handleRemove = (task) => {
-        var r = window.confirm(`Are you want to remove ${task.title}`)
-        if (r) {
+        var confirm = window.confirm(`Are you want to remove ${task.title}`)
+        if (confirm) {
             dispatchTasks({ type: 'REMOVE_TASK', id: task.id })
+            toast.success("Delete Task Successful !", {
+                position: toast.POSITION.TOP_RIGHT
+            });
             history.push('/')
         }
 
@@ -133,9 +140,9 @@ const AddTask = props => {
                                 <button type="submit" className="btn btn-danger flex-center mr-1"
                                     onClick={() => handleRemove(task)}
 
-                                ><ion-icon name="close-circle-outline"></ion-icon>Delete</button>
+                                ><ion-icon name="trash-outline"></ion-icon>Delete</button>
                                 <button type="button" className="btn btn-light flex-center" onClick={() => { history.push('/') }}>
-                                    <ion-icon name="pencil-outline"></ion-icon>Cancel</button>
+                                    <ion-icon name="close-circle-outline"></ion-icon>Cancel</button>
                             </div>
                         </form>
                     </div>

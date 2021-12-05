@@ -1,6 +1,7 @@
 import moment from 'moment';
 import React, { useContext, useEffect, useState } from 'react';
 import { useHistory, useParams } from "react-router-dom";
+import { toast } from 'react-toastify';
 import { Table } from 'reactstrap';
 import { Context } from '../../../store/context/Context';
 const EditSchedule = props => {
@@ -20,6 +21,9 @@ const EditSchedule = props => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatchSchedules({ type: 'UPDATE_SCHEDULE', schedule })
+        toast.success("Update Schedule Successful !", {
+            position: toast.POSITION.TOP_RIGHT
+        });
         history.push('/schedule')
     }
 

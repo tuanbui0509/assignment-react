@@ -1,5 +1,6 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from "react-router-dom";
+import { toast } from 'react-toastify';
 import { Context } from '../../../store/context/Context';
 const AddSchedule = props => {
     const history = useHistory();
@@ -17,6 +18,9 @@ const AddSchedule = props => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatchSchedules({ type: 'ADD_SCHEDULE', schedule })
+        toast.success("Add Schedule Successful !", {
+            position: toast.POSITION.TOP_RIGHT
+        });
         history.push('/schedule')
     }
 
@@ -111,7 +115,7 @@ const AddSchedule = props => {
                         </div>
 
                         <div className='flex-end'>
-                            <button type="submit" className="btn btn-primary flex-center"><ion-icon name="checkmark-done-circle-outline"></ion-icon>Update</button>
+                            <button type="submit" className="btn btn-primary flex-center"><ion-icon name="add-circle-outline"></ion-icon>Add</button>
                             <button type="button" className="btn btn-light flex-center" onClick={() => { history.push('/schedule') }}>
                                 <ion-icon name="pencil-outline"></ion-icon>Cancel</button>
                         </div>

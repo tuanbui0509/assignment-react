@@ -1,5 +1,7 @@
 import React, { useContext, useState } from 'react';
 import { useHistory } from "react-router-dom";
+import { toast } from 'react-toastify';
+import ToastNotification from '../../../components/Toast';
 import { Context } from '../../../store/context/Context';
 const AddTask = props => {
     const history = useHistory();
@@ -14,10 +16,11 @@ const AddTask = props => {
     const handleSubmit = (e) => {
         e.preventDefault();
         dispatchTasks({ type: 'ADD_TASK', task })
+        toast.success("Add Task Successful !", {
+            position: toast.POSITION.TOP_RIGHT
+        });
         history.push('/')
     }
-
-
     return (
         <div>
             <button
@@ -103,9 +106,9 @@ const AddTask = props => {
                             </div>
                         </div>
                         <div className='flex-end'>
-                            <button type="submit" className="btn btn-primary flex-center mr-1"><ion-icon name="checkmark-done-circle-outline"></ion-icon>Save</button>
+                            <button type="submit" className="btn btn-primary flex-center mr-1"><ion-icon name="add-circle-outline"></ion-icon>Add</button>
                             <button type="button" className="btn btn-light flex-center" onClick={() => { history.goBack() }}>
-                                <ion-icon name="pencil-outline"></ion-icon>Cancel</button>
+                                <ion-icon name="close-circle-outline"></ion-icon>Cancel</button>
                         </div>
                     </form>
 
