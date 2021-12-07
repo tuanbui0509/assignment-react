@@ -1,9 +1,9 @@
 import React, { useEffect, useState, useContext } from 'react'
 import { Link } from 'react-router-dom'
+import PropTypes from 'prop-types';
 import { toast } from 'react-toastify'
 import { Context } from '../../../store/context/Context'
 const user_icon = require('../../../assets/images/icon-user.png').default
-
 const UserItem = (props) => {
     const { user } = props
     const [isEditing, setIsEditing] = useState(false)
@@ -80,9 +80,11 @@ const UserItem = (props) => {
         } else setIsEditing(false)
     }
     const handleCancel = () => {
-        if (!user) {
-            props.setIsAdd(false)
-        } else setIsEditing(false)
+        var confirm = window.confirm(`Are you want to cancel user`)
+        if (confirm)
+            if (!user) {
+                props.setIsAdd(false)
+            } else setIsEditing(false)
     }
     return (
         <div className="col-6 col-md-3 col-sm-6 mb-3">
@@ -117,7 +119,7 @@ const UserItem = (props) => {
                                     }}
                                 />
                             </div>
-                            {validate.name ? <p className='bg-danger p-2 text-white'>You need enter to Name</p> : null}
+                            {validate.name ? <p className='bg-danger p-2 text-danger bg-opacity-25'>You need enter to Name</p> : null}
                         </>
                     }
 
@@ -151,39 +153,43 @@ const UserItem = (props) => {
                                         setUserEditing({ ...userEditing, position: e.target.value })
                                     }}
                                 />
-                                {validate.position ? <p className='bg-danger p-2 text-white'>You need enter to Position</p> : null}
+                                {validate.position ? <p className='bg-danger p-2 text-danger bg-opacity-25'>You need enter to Position</p> : null}
                             </>
                         }
                         <Link to="/schedule" className="btn btn-primary m-2">Schedule</Link>
                     </div>
                     <div className="card-footer flex-center">
-                        {user && !isEditing ?
-                            <button
-                                type="button"
-                                className="btn btn-outline-success flex-center"
-                                style={{ marginRight: '0.5rem', padding: '5px 10px' }}
-                                onClick={() => handleEdit(user)}
-                            >
-                                <ion-icon class='btn-icon' name="pencil-outline"></ion-icon>Edit</button> :
-                            <>
-                                <button type="button"
-                                    className="btn btn-outline-secondary flex-center"
-                                    style={{ marginRight: '0.5rem', padding: '5px 10px' }}
-                                    onClick={() => handleCancel()}
-                                >
-                                    <ion-icon class='btn-icon' name="pencil-outline"></ion-icon>Cancel</button>
+                        {user ? <>
+                            {!isEditing ?
                                 <button
-                                    type="submit"
+                                    type="button"
                                     className="btn btn-outline-success flex-center"
                                     style={{ marginRight: '0.5rem', padding: '5px 10px' }}
+                                    onClick={() => handleEdit(user)}
                                 >
-                                    <ion-icon class='btn-icon' name="pencil-outline"></ion-icon>Update</button>
-                            </>
-                        }
-                        <button
-                            className="btn btn-danger flex-center" style={{ padding: '5px' }}
-                            onClick={() => handleRemove(user)}>
-                            <ion-icon class='btn-icon' name="close-outline"></ion-icon>Remove</button>
+                                    <ion-icon class='btn-icon' name="pencil-outline"></ion-icon>Edit</button> :
+                                <>
+                                    <button type="button"
+                                        className="btn btn-outline-secondary flex-center"
+                                        style={{ marginRight: '0.5rem', padding: '5px 10px' }}
+                                        onClick={() => handleCancel()}
+                                    >
+                                        <ion-icon class='btn-icon' name="pencil-outline"></ion-icon>Cancel</button>
+                                    <button
+                                        type="submit"
+                                        className="btn btn-outline-success flex-center"
+                                        style={{ marginRight: '0.5rem', padding: '5px 10px' }}
+                                    >
+                                        <ion-icon class='btn-icon' name="pencil-outline"></ion-icon>Update</button>
+                                </>
+                            }
+                            <button type='button'
+                                className="btn btn-danger flex-center" style={{ padding: '5px' }}
+                                onClick={() => handleRemove(user)}>
+                                <ion-icon class='btn-icon' name="close-outline"></ion-icon>Remove</button></> :
+                            <button type='submit'
+                                className="btn btn-outline-primary flex-center">
+                                <ion-icon name="add-circle-outline" class='mr-1'></ion-icon>Create</button>}
                     </div>
                 </div>
             </form>
@@ -192,4 +198,11 @@ const UserItem = (props) => {
     )
 }
 
+UserItem.propTypes = {
+    user: PropTypes.object
+}
+
+
 export default UserItem
+
+

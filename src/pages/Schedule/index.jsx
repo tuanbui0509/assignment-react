@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom'
 import ScheduleItem from '../../components/Schedule/ScheduleItem'
 import ScheduleList from '../../components/Schedule/ScheduleList'
 import { Context } from '../../store/context/Context'
+import PropTypes from 'prop-types';
 
 const Schedule = props => {
     const { schedules } = useContext(Context);
@@ -21,7 +22,8 @@ const Schedule = props => {
     return (
         <>
             <div className='container'>
-                <Link to='/schedule/add' className="btn btn-primary d-flex align-items-center" style={{ width: '155px'}}><ion-icon class='btn-icon' name="calendar-outline"></ion-icon>Add Schedule</Link>
+                <Link to='/schedule/add' className="btn btn-primary d-flex align-items-center" style={{ width: '155px' }}>
+                    <ion-icon class='btn-icon' name="calendar-outline"></ion-icon>Add Schedule</Link>
             </div>
             <ScheduleList>
                 {showListSchedule()}
@@ -32,7 +34,7 @@ const Schedule = props => {
 }
 
 Schedule.propTypes = {
-
+    schedules: PropTypes.object
 }
 
 export default Schedule

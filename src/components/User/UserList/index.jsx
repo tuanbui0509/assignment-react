@@ -1,6 +1,6 @@
-import React, { Fragment } from 'react'
+import React from 'react'
 import UserItem from '../UserItem'
-const UserList = (props) => {
+const UserList = React.memo((props) => {
     const { users } = props
     const showUsers = () => {
         let result = null
@@ -13,11 +13,12 @@ const UserList = (props) => {
         return result
     }
 
+    console.log('rendered')
     return (
-        <Fragment>
+        <>
             {showUsers()}
-        </Fragment>
+        </>
     )
 }
-
+)
 export default UserList

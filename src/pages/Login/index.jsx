@@ -7,7 +7,6 @@ const Login = props => {
     const history = useHistory()
     const [formValues, setFormValues] = useState(initialValues);
     const [formErrors, setFormErrors] = useState({});
-    const [isSubmitting, setIsSubmitting] = useState(false);
     const { dispatchLogin, users, login } = useContext(Context);
     const handleSubmit = (e) => {
         e.preventDefault();
@@ -20,7 +19,6 @@ const Login = props => {
                 position: toast.POSITION.TOP_RIGHT
             });
         } else {
-            setIsSubmitting(true);
             toast.error("Login Failure !", {
                 position: toast.POSITION.TOP_RIGHT
             });
@@ -117,7 +115,7 @@ const Login = props => {
                                 <span className="error">{formErrors.password}</span>
                             )}
                         </div>
-                        <button type="submit" className='btn btn-success m-auto text-center d-block'>Sign In</button>
+                        <button type="submit" className='btn btn-primary m-auto text-center d-block'>Sign In</button>
                     </form>
                 </div>
                 :

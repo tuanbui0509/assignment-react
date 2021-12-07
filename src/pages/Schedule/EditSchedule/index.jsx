@@ -48,7 +48,7 @@ const EditSchedule = props => {
                 className="btn btn-danger flex-center"
                 onClick={() => { history.goBack() }}
             >
-                <ion-icon  class='btn-icon' name="arrow-back-circle"></ion-icon>Back
+                <ion-icon class='btn-icon' name="arrow-back-circle"></ion-icon>Back
             </button>
             <div>
                 <nav>
@@ -83,30 +83,32 @@ const EditSchedule = props => {
                                         </th>
                                     </tr>
                                 </thead>
-                                <tr>
-                                    <th>
-                                        {schedule.title}
-                                    </th>
-                                    <td>
-                                        {schedule.creator}
-                                    </td>
-                                    <td>
-                                        {schedule.description}
-                                    </td>
-                                    <td>
-                                        {schedule.location}
-                                    </td>
-                                    <td>
-                                        {moment(schedule.time_start).format('DD/MM/yyyy HH:mm:ss')}
-                                    </td>
-                                    <td>
-                                        {moment(schedule.time_end).format('DD/MM/yyyy HH:mm:ss')}
-                                    </td>
-                                </tr>
+                                <tbody>
+                                    <tr>
+                                        <th>
+                                            {schedule.title}
+                                        </th>
+                                        <td>
+                                            {schedule.creator}
+                                        </td>
+                                        <td>
+                                            {schedule.description}
+                                        </td>
+                                        <td>
+                                            {schedule.location}
+                                        </td>
+                                        <td>
+                                            {moment(schedule.time_start).format('DD/MM/yyyy HH:mm:ss')}
+                                        </td>
+                                        <td>
+                                            {moment(schedule.time_end).format('DD/MM/yyyy HH:mm:ss')}
+                                        </td>
+                                    </tr>
+                                </tbody>
                             </Table>
                         </div>
                     </div>
-                    <div className="tab-pane fade" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
+                    <div className="tab-pane fade mb-3" id="nav-edit" role="tabpanel" aria-labelledby="nav-edit-tab">
                         <form onSubmit={handleSubmit}>
                             <div className="mb-3">
                                 <label htmlFor="title" className="form-label">Title</label>
@@ -182,9 +184,9 @@ const EditSchedule = props => {
                             </div>
 
                             <div className='flex-end'>
-                                <button type="submit" className="btn btn-primary flex-center"><ion-icon  class='btn-icon' name="checkmark-done-circle-outline"></ion-icon>Update</button>
+                                <button type="submit" className="btn btn-primary flex-center"><ion-icon class='btn-icon' name="checkmark-done-circle-outline"></ion-icon>Update</button>
                                 <button type="button" className="btn btn-light flex-center" onClick={() => { history.push('/schedule') }}>
-                                    <ion-icon  class='btn-icon' name="pencil-outline"></ion-icon>Cancel</button>
+                                    <ion-icon class='btn-icon' name="pencil-outline"></ion-icon>Cancel</button>
                             </div>
                         </form>
                     </div>

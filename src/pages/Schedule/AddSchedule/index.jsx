@@ -40,7 +40,7 @@ const AddSchedule = props => {
                 </li>
             </ul>
             <div className="tab-content" id="myTabContent">
-                <div className="tab-pane fade show active" id="add" role="tabpanel" aria-labelledby="add-tab">
+                <div className="tab-pane fade show active mb-3" id="add" role="tabpanel" aria-labelledby="add-tab">
                     <form onSubmit={handleSubmit}>
                         <div className="mb-3">
                             <label htmlFor="title" className="form-label">Title</label>
