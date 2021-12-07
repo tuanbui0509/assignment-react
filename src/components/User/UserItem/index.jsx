@@ -80,7 +80,7 @@ const UserItem = (props) => {
         } else setIsEditing(false)
     }
     const handleCancel = () => {
-        var confirm = window.confirm(`Are you want to cancel user`)
+        var confirm = window.confirm(`Are you want to cancel ${user.name}`)
         if (confirm)
             if (!user) {
                 props.setIsAdd(false)
@@ -172,7 +172,7 @@ const UserItem = (props) => {
                                     <button type="button"
                                         className="btn btn-outline-secondary flex-center"
                                         style={{ marginRight: '0.5rem', padding: '5px 10px' }}
-                                        onClick={() => handleCancel()}
+                                        onClick={() => handleCancel(user)}
                                     >
                                         <ion-icon class='btn-icon' name="pencil-outline"></ion-icon>Cancel</button>
                                     <button

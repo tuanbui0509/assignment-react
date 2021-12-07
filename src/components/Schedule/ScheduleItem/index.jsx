@@ -15,7 +15,6 @@ const ScheduleItem = (props) => {
                 position: toast.POSITION.TOP_RIGHT
             });
         }
-
     }
     return (
         <tr>
@@ -60,8 +59,7 @@ const ScheduleItem = (props) => {
                     type="submit"
                     className="btn btn-danger flex-center"
                     style={{ marginRight: '1rem' }}
-                    onClick={() => handleRemove()}
-                >
+                    onClick={() => handleRemove()}>
                     <ion-icon  class='btn-icon' name="trash-outline"></ion-icon>Delete</button>
             </td>
         </tr>
