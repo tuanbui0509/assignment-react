@@ -1,29 +1,7 @@
 import React, { useContext } from 'react';
 import { Link, Route } from 'react-router-dom';
+import { menus } from '../../constants/NavBar';
 import { Context } from '../../store/context/Context';
-
-const menus = [
-    {
-        label: 'Dashboard',
-        to: '/',
-        exact: true
-    },
-    {
-        label: 'User',
-        to: '/user',
-        exact: false
-    },
-    {
-        label: 'Schedule',
-        to: '/schedule',
-        exact: false
-    },
-    {
-        label: 'Login',
-        to: '/login',
-        exact: false
-    }
-]
 // custom Link
 const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
     let paths

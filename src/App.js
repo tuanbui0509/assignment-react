@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Menu from './components/Navbar';
 import routes from './routes/router';
-import { ContextProvider } from "./store/context/Context";
 
 const showContentMenus = (routes) => {
   let result = null;
@@ -22,21 +21,18 @@ const showContentMenus = (routes) => {
 const App = () => {
 
   return (
-    <ContextProvider>
-      <Router>
-        <Menu />
-        <div className="container mt-2">
-          <div className="row">
-            {showContentMenus(routes)}
-          </div>
-          <ToastContainer
-            position="top-right"
-            autoClose={2000}
-          />
+    <Router>
+      <Menu />
+      <div className="container mt-2">
+        <div className="row">
+          {showContentMenus(routes)}
         </div>
-      </Router>
-    </ContextProvider>
-
+        <ToastContainer
+          position="top-right"
+          autoClose={2000}
+        />
+      </div>
+    </Router>
   )
 }
 

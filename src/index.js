@@ -1,13 +1,22 @@
-import React from 'react';
-import ReactDOM from 'react-dom';
 import "bootstrap/dist/css/bootstrap.min.css";
+import React from 'react';
 import "react-datetime/css/react-datetime.css";
+import ReactDOM from 'react-dom';
+import { Provider } from "react-redux";
 import 'react-toastify/dist/ReactToastify.css';
+import { PersistGate } from "redux-persist/integration/react";
 import App from './App';
-import './sass/index.scss'
+import index from "./redux";
+import './sass/index.scss';
+
+
 ReactDOM.render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>,
-  document.getElementById('root')
+  <Provider store={index.store}>
+    <PersistGate loading={null} persistor={index.persistor}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </PersistGate>
+  </Provider>,
+  document.getElementById("root")
 );
