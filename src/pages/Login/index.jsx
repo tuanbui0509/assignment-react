@@ -1,131 +1,125 @@
-import React, { useContext, useState } from 'react';
+import { ErrorMessage, Field, Form, Formik } from "formik";
+import React from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { Context } from '../../store/context/Context';
+import * as Yup from "yup";
+import { loginAPI } from "../../api/Login";
+import { login, removeLogin } from "../../redux/Login";
+import useLoading from "../../hook/HookLoading";
+
 const Login = props => {
-    const initialValues = { email: "", password: "" };
     const history = useHistory()
-    const [formValues, setFormValues] = useState(initialValues);
-    const [formErrors, setFormErrors] = useState({});
-    const { dispatchLogin, users, login } = useContext(Context);
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        setFormErrors(validate(formValues));
-        let result = verifyLogin()
-        if (result.length > 0) {
-            dispatchLogin({ type: 'LOGIN', user: result[0] })
+    const [hidden, display, Loading] = useLoading();
+
+    const dispatch = useDispatch();
+    const isToken = useSelector((state) => state.Login)
+    console.log(isToken);
+    const handleSubmit = async (value) => {
+        try {
+            const res = await loginAPI(JSON.stringify(value));
+            let temp = res.data;
+            console.log(temp);
+            dispatch(login())
+            localStorage.setItem('token', temp.token)
+            localStorage.setItem('user', temp.username)
             history.push('/')
             toast.success("Login Successful !", {
                 position: toast.POSITION.TOP_RIGHT
             });
-        } else {
-            toast.error("Login Failure !", {
+        } catch (err) {
+            console.log(err.response.data.message);
+            toast.success(err.response.data.message, {
                 position: toast.POSITION.TOP_RIGHT
             });
         }
 
     };
-    const verifyLogin = () => {
-        return users.filter(user => user.password === formValues.password && user.email === formValues.email);
-    }
-    const validate = (values) => {
-        let errors = {};
-        const regex = /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/i;
-        if (!values.email) {
-            errors.email = "Cannot be blank";
-        } else if (!regex.test(values.email)) {
-            errors.email = "Invalid email format";
-        }
-
-        if (!values.password) {
-            errors.password = "Cannot be blank";
-        } else if (values.password.length < 6) {
-            errors.password = "Password must be more than 6 characters";
-        }
-
-        return errors;
-    };
 
     const handleLogout = () => {
-        dispatchLogin({ type: 'LOGOUT', user: null })
+        dispatch(removeLogin())
         toast.success("You Logout Successful !", {
             position: toast.POSITION.TOP_RIGHT
         });
     }
+    const LoginSchema = Yup.object().shape({
+        Username: Yup.string()
+            .required("Username is required"),
+        password: Yup.string()
+            .min(3, "Password must be 3 characters at minimum")
+            .required("Password is required"),
+    });
 
     return (
         <div className="container">
-            {!login ?
-                <div className='container-form container-login'>
-                    <h2 className='text-center'>Sign In</h2>
-                    <form onSubmit={handleSubmit} noValidate>
-                        <div className="form-row">
-                            <label htmlFor="email">Email</label>
-                            <input
-                                type="email"
-                                name="email"
-                                id="email"
-                                value={formValues.email}
-                                onBlur={(e) => {
-                                    if (e.target.value.length === 0) {
-                                        setFormErrors({ ...formErrors, email: "Cannot be blank" })
-                                    }
-                                }}
-                                onChange={(e) => {
-                                    if (e.target.value.length === 0) {
-                                        setFormErrors({ ...formErrors, email: "Cannot be blank" })
-                                    }
-                                    else {
-                                        setFormErrors({ ...formErrors, email: "" })
-                                    }
-                                    setFormValues({ ...formValues, email: e.target.value })
-                                }}
-                                className={formErrors.email && "input-error"}
-                            />
-                            {formErrors.email && (
-                                <span className="error">{formErrors.email}</span>
-                            )}
-                        </div>
+            <div className='container-form container-login'>
+                {!isToken ?
+                    <div className="row">
+                        <div className="col-lg-12">
+                            <Formik
+                                initialValues={{ Username: "", password: "" }}
+                                validationSchema={LoginSchema}
+                                onSubmit={handleSubmit}
+                            >
+                                {({ touched, errors, isSubmitting, values }) =>
+                                (
+                                    <div>
+                                        <div className="row mb-2">
+                                            <div className="col-lg-12 text-center">
+                                                <h1 className="mt-5">Login Form</h1>
+                                            </div>
+                                        </div>
+                                        <Form>
+                                            <div className="mb-4">
+                                                <div className="form-group">
+                                                    <label>Username</label>
+                                                    <Field
+                                                        name="Username"
+                                                        placeholder="Enter Username"
+                                                        autocomplete="off"
+                                                        className={`mt-2 form-control
+                          ${touched.Username && errors.Username ? "is-invalid" : ""}`}
+                                                    />
 
-                        <div className="form-row">
-                            <label htmlFor="password">Password</label>
-                            <input
-                                type="password"
-                                name="password"
-                                id="password"
-                                value={formValues.password}
-                                // onChange={handleChange}
-                                onChange={(e) => {
-                                    if (e.target.value.length === 0) {
-                                        setFormErrors({ ...formErrors, password: "Cannot be blank" })
-                                    }
-                                    else {
-                                        setFormErrors({ ...formErrors, password: "" })
-                                    }
-                                    setFormValues({ ...formValues, password: e.target.value })
-                                }}
-                                onBlur={(e) => {
-                                    if (e.target.value.length === 0) {
-                                        setFormErrors({ ...formErrors, password: "Cannot be blank" })
-                                    }
-                                }}
-                                className={formErrors.password && "input-error"}
-                            />
-                            {formErrors.password && (
-                                <span className="error">{formErrors.password}</span>
-                            )}
+                                                    <ErrorMessage
+                                                        component="div"
+                                                        name="Username"
+                                                        className="invalid-feedback"
+                                                    />
+                                                </div>
+                                                <div className="form-group">
+                                                    <label htmlFor="password" className="mt-3">
+                                                        Password
+                                                    </label>
+                                                    <Field
+                                                        type="password"
+                                                        name="password"
+                                                        placeholder="Enter password"
+                                                        className={`mt-2 form-control
+                          ${touched.password && errors.password
+                                                                ? "is-invalid"
+                                                                : ""
+                                                            }`}
+                                                    />
+                                                    <ErrorMessage
+                                                        component="div"
+                                                        name="password"
+                                                        className="invalid-feedback"
+                                                    />
+                                                </div>
+                                            </div>
+                                            <button type="submit" className='btn btn-primary m-auto text-center d-block'>Sign In</button>
+                                        </Form>
+                                    </div>
+                                )}
+                            </Formik>
                         </div>
-                        <button type="submit" className='btn btn-primary m-auto text-center d-block'>Sign In</button>
-                    </form>
-                </div>
-                :
-                <div className='container-form container-login'>
-                    <h2 className='text-center'>Logout</h2>
-                    <button type="button" className='btn btn-success m-auto text-center d-block' onClick={() => handleLogout()}>Logout</button>
-                </div>
-            }
+                    </div> : <button type="button" className='btn btn-primary m-auto text-center d-block' onClick={handleLogout}>Logout</button>
+                }
+
+            </div>
+            {/* {Loading} */}
         </div>
-
     )
 }
 

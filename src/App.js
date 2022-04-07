@@ -1,7 +1,9 @@
 import React from "react";
+import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { ToastContainer } from "react-toastify";
 import Menu from './components/Navbar';
+import Login from "./pages/Login";
 import routes from './routes/router';
 
 const showContentMenus = (routes) => {
@@ -19,20 +21,26 @@ const showContentMenus = (routes) => {
   return <Switch>{result}</Switch>
 }
 const App = () => {
-
+  const isToken = useSelector((state) => state.Login)
   return (
-    <Router>
-      <Menu />
-      <div className="container mt-2">
-        <div className="row">
-          {showContentMenus(routes)}
+    <>
+      {isToken ? <Router>
+        <Menu />
+        <div className="container mt-2">
+          <div className="row">
+            {showContentMenus(routes)}
+          </div>
+          <ToastContainer
+            position="top-right"
+            autoClose={2000}
+          />
         </div>
-        <ToastContainer
-          position="top-right"
-          autoClose={2000}
-        />
-      </div>
-    </Router>
+      </Router>
+        : <Router>
+          <Login />
+        </Router>}
+
+    </>
   )
 }
 

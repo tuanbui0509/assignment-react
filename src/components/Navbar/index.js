@@ -1,7 +1,6 @@
-import React, { useContext } from 'react';
+import React from 'react';
 import { Link, Route } from 'react-router-dom';
 import { menus } from '../../constants/NavBar';
-import { Context } from '../../store/context/Context';
 // custom Link
 const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
     let paths
@@ -29,7 +28,7 @@ const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
 }
 
 const Menu = () => {
-    const { login } = useContext(Context);
+    // const { login } = useContext(Context);
 
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
@@ -39,7 +38,7 @@ const Menu = () => {
                         {showMenus(menus)}
                     </nav>
                 </div>
-                {login ? <span className='flex-center'><ion-icon name="person-circle-outline"></ion-icon>Username: {login.email}</span> : null}
+                {/* {login ? <span className='flex-center'><ion-icon name="person-circle-outline"></ion-icon>Username: {login.email}</span> : null} */}
             </div>
         </nav>
     )

@@ -1,5 +1,5 @@
-import Loading from "components/Loading";
 import React, { useState } from "react";
+import Loading from "../common/Loading";
 
 export default function HookLoading() {
   const [loading, setLoading] = useState(false);

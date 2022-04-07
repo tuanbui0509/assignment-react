@@ -2,7 +2,7 @@ import axiosClient from "../axios";
 
 const taskString = 'Tasks'
 
-export const getListTask = () => {
+export const getAllTask = () => {
     return axiosClient.get(`${taskString}`);
 }
 

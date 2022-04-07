@@ -1,21 +1,20 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-
-const taskSlice =  createSlice({
-    name : 'Task',
+const taskSlice = createSlice({
+    name: 'Task',
     initialState: [],
-    reducers:{
-        addListTask : ( state , payload )=>{
+    reducers: {
+        getListTask: (state, payload) => {
             return payload.payload;
         },
-        removeListTask : (state , payload )=>{
-            return  [];
+        removeListTask: (state, payload) => {
+            return [];
         }
     }
 })
 
-const { actions  , reducer } = taskSlice;
+const { actions, reducer } = taskSlice;
 
-export const { addListTask ,  removeListTask } = actions;
+export const { getListTask, removeListTask } = actions;
 
 export default reducer;
