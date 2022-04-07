@@ -1,25 +1,20 @@
-export const LOGIN_SUCCESS = "Đăng nhập thành công";
-export const LOGIN_FAIL = "Sai tài khoản hoặc mật khẩu.";
-
-export const UPDATE_USER_SUCCESS = "Cập nhật thành công";
-export const UPDATE_USER_FAIL = "Cập nhật thất bại";
+export const LOGIN_SUCCESS = "Login Successful !";
+export const LOGOUT_SUCCESS = "You Logout Successful !";
+export const LOGIN_FAIL = "Login Failure !";
 
 
-export const INSERT_USER_SUCCESS = "Thêm thành công";
-export const INSERT_USER_FAIL = "Thêm thất bại";
-export const INSERT_USER_FAIL_USERNAME = "Trùng tên tài khoản";
+export const INSERT_SCHEDULE_SUCCESS = "Insert Schedule Successful !";
+export const UPDATE_SCHEDULE__SUCCESS = "Update Schedule Successful !";
+export const DELETE_SCHEDULE__SUCCESS = "Delete Schedule Successful !";
 
 
-export const DELELTE_USER_SUCCESS = "Xóa thành công";
-export const DELELTE_USER_FAIL = "Xóa thất bại";
+export const DELETE_USER_SUCCESS = "Delete User Successful !";
+export const UPDATE_USER_SUCCESS = "Delete Task Successful !";
+export const INSERT_USER_SUCCESS = "Delete Task Successful !";
 
 
-export const INSERT_CATEGORY_SUCCESS = "Thêm thành công";;
-export const INSERT_CATEGORY_FAIL = "Trùng tên danh mục";
+export const INSERT_TASK_SUCCESS = "Add Task Successful !";
+export const UPDATE_TASK_SUCCESS = "Edit Task Successful !";
+export const DELETE_TASK_SUCCESS = "Delete Task Successful !";
 
-export const UPDATE_CATEGORY_SUCCESS = "Cập nhật thành công";;
-export const UPDATE_CATEGORY_FAIL = "Trùng tên danh mục";
-
-export const DELELTE_CATEGORY_SUCCESS = "Xóa thành công";
-export const DELELTE_CATEGORY_FAIL = "Xóa thất bại";
-
+export const MESSAGE_FAILURE = "The process failed. !";

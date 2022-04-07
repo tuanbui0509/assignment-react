@@ -4,7 +4,7 @@ const scheduleSlice = createSlice({
   name: "Schedule",
   initialState: [],
   reducers: {
-    getSchedule: (state, payload) => {
+    getListSchedule: (state, payload) => {
       return payload.payload;
     },
     removeSchedule: (state, payload) => {
@@ -15,6 +15,6 @@ const scheduleSlice = createSlice({
 
 const { actions, reducer } = scheduleSlice;
 
-export const { getSchedule, removeSchedule } = actions;
+export const { getListSchedule, removeSchedule } = actions;
 
 export default reducer;

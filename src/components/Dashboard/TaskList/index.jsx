@@ -1,26 +1,21 @@
 import React, { useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { getAllTask } from '../../../api/Task';
 import useLoading from "../../../hook/HookLoading";
 import { getListTask } from "../../../redux/Task";
 import Task from '../Task';
-import { useSelector, useDispatch } from 'react-redux'
-const TaskList = (props) => {
+const TaskList = () => {
     const [hidden, display, Loading] = useLoading();
     const tasks = useSelector((state) => state.Task);
-    console.log(tasks);
     const dispatch = useDispatch();
 
     const getListUser = async () => {
         try {
             display();
             const res = await getAllTask();
-            if (res.status === 200) {
-                let temp = [...res.data];
-                hidden();
-                // })
-
-                dispatch(getListTask(temp));
-            }
+            let temp = res.data;
+            hidden();
+            dispatch(getListTask(temp));
         } catch (err) {
             hidden();
             console.log(err);
@@ -39,7 +34,7 @@ const TaskList = (props) => {
                         title="New Tasks"
                         icon="add-circle"
                         color="bg-primary"
-                        tasks={tasks?.filter(word => word.status === 0)}
+                        tasks={tasks?.filter(word => word.state === 1)}
                     />
                 </div>
                 <div className="col col-4">
@@ -47,7 +42,7 @@ const TaskList = (props) => {
                         title="Tasks in process"
                         icon="sync-circle"
                         color="bg-danger"
-                        tasks={tasks?.filter(word => word.status === 1)}
+                        tasks={tasks?.filter(word => word.state === 2)}
                     />
                 </div>
                 <div className="col col-4">
@@ -55,7 +50,7 @@ const TaskList = (props) => {
                         title="Tasks got done"
                         icon="checkmark-circle"
                         color="bg-success"
-                        tasks={tasks?.filter(word => word.status === 2)}
+                        tasks={tasks?.filter(word => word.state === 3)}
                     />
                 </div>
             </div>

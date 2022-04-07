@@ -1,24 +1,34 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { toast } from 'react-toastify';
-import { Context } from '../../../store/context/Context';
+import { insertTask } from '../../../api/Task';
+import { MESSAGE_FAILURE, UPDATE_TASK_SUCCESS } from '../../../constants/Respone';
+import { notificationError, notificationSuccess } from '../../../helper/Notification';
+import useLoading from "../../../hook/HookLoading";
+
 const AddTask = props => {
     const history = useHistory();
-    const { dispatchTasks } = useContext(Context);
+    const [hidden, display, Loading] = useLoading();
 
     const [task, setTask] = useState({
         title: '',
         description: '',
-        status: 0
+        state: 1
     })
 
-    const handleSubmit = (e) => {
-        e.preventDefault();
-        dispatchTasks({ type: 'ADD_TASK', task })
-        toast.success("Add Task Successful !", {
-            position: toast.POSITION.TOP_RIGHT
-        });
-        history.push('/')
+    const handleSubmit = async (e) => {
+        e.preventDefault()
+        try {
+            display();
+            const res = await insertTask(task);
+            console.log(res.data);
+            notificationSuccess(UPDATE_TASK_SUCCESS, 1000);
+            hidden();
+            history.push('/')
+        } catch (err) {
+            hidden();
+            notificationError(MESSAGE_FAILURE, 3000);
+            console.log(err);
+        }
     }
     return (
         <div>
@@ -27,7 +37,7 @@ const AddTask = props => {
                 className="btn btn-danger flex-center"
                 onClick={() => { history.goBack() }}
             >
-                <ion-icon  class='btn-icon' name="arrow-back-circle"></ion-icon>Back
+                <ion-icon class='btn-icon' name="arrow-back-circle"></ion-icon>Back
             </button>
             <ul className="nav nav-tabs justify-content-end" id="myTab" role="tablist">
                 <li className="nav-item" role="presentation">
@@ -60,19 +70,19 @@ const AddTask = props => {
                                 onChange={(e) => setTask({ ...task, description: e.target.value })}
                                 required />
                         </div>
-                        <div className="p-3 mb-2 bg-light text-dark">Status</div>
+                        <div className="p-3 mb-2 bg-light text-dark">State</div>
                         <div className='flex-start'>
                             <div className="form-check" style={{ marginRight: '1rem' }}>
                                 <input
                                     className="form-check-input"
                                     type="radio"
-                                    name="status"
-                                    value={0}
-                                    id="0"
-                                    checked={task.status === 0}
-                                    onChange={(e) => setTask({ ...task, status: parseInt(e.target.value) })}
+                                    name="state"
+                                    value={1}
+                                    id="1"
+                                    checked={task.state === 1}
+                                    onChange={(e) => setTask({ ...task, state: parseInt(e.target.value) })}
                                 />
-                                <label className="form-check-label" htmlFor="0">
+                                <label className="form-check-label" htmlFor="1">
                                     Now
                                 </label>
 
@@ -80,41 +90,40 @@ const AddTask = props => {
                             <div className="form-check" style={{ marginRight: '1rem' }}>
                                 <input
                                     className="form-check-input"
-                                    value={1}
+                                    value={2}
                                     type="radio"
-                                    name="status"
-                                    id="1"
-                                    onChange={(e) => setTask({ ...task, status: parseInt(e.target.value) })}
+                                    name="state"
+                                    id="2"
+                                    onChange={(e) => setTask({ ...task, state: parseInt(e.target.value) })}
                                 />
-                                <label className="form-check-label" htmlFor="1">
+                                <label className="form-check-label" htmlFor="2">
                                     In process
                                 </label>
                             </div>
                             <div className="form-check" style={{ marginRight: '1rem' }}>
                                 <input
                                     className="form-check-input"
-                                    value={2}
+                                    value={3}
                                     type="radio"
-                                    name="status"
-                                    id="2"
-                                    onChange={(e) => setTask({ ...task, status: parseInt(e.target.value) })}
+                                    name="state"
+                                    id="3"
+                                    onChange={(e) => setTask({ ...task, state: parseInt(e.target.value) })}
                                 />
-                                <label className="form-check-label" htmlFor="2">
+                                <label className="form-check-label" htmlFor="3">
                                     Done
                                 </label>
                             </div>
                         </div>
                         <div className='flex-end'>
-                            <button type="submit" className="btn btn-primary flex-center mr-1"><ion-icon  class='btn-icon' name="add-circle-outline"></ion-icon>Add</button>
+                            <button type="submit" className="btn btn-primary flex-center mr-1"><ion-icon class='btn-icon' name="add-circle-outline"></ion-icon>Add</button>
                             <button type="button" className="btn btn-light flex-center" onClick={() => { history.goBack() }}>
-                                <ion-icon  class='btn-icon' name="close-circle-outline"></ion-icon>Cancel</button>
+                                <ion-icon class='btn-icon' name="close-circle-outline"></ion-icon>Cancel</button>
                         </div>
                     </form>
 
                 </div>
             </div>
-
-
+            {Loading}
         </div>
 
     )

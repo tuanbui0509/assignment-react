@@ -1,6 +1,6 @@
 import { toast } from "react-toastify";
 
-export const notificationSuccess = (message , duration ) => {
+export const notificationSuccess = (message, duration) => {
   return toast.success(message, {
     position: "top-right",
     autoClose: duration,
@@ -13,7 +13,7 @@ export const notificationSuccess = (message , duration ) => {
   });
 };
 
-export const notificationErorr = (message , duration) => {
+export const notificationError = (message, duration) => {
   return toast.error(message, {
     position: "top-right",
     autoClose: duration,

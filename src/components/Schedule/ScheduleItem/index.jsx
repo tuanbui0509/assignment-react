@@ -1,19 +1,12 @@
-import React, { useContext } from 'react'
-import moment from 'moment'
-import { Link } from 'react-router-dom'
-import { Context } from '../../../store/context/Context';
-import { toast } from 'react-toastify';
+import moment from 'moment';
+import React from 'react';
+import { Link } from 'react-router-dom';
 const ScheduleItem = (props) => {
-    const { dispatchSchedules } = useContext(Context);
-
     const { schedule } = props
-    const handleRemove = () => {
+    const removeSchedule = () => {
         var confirm = window.confirm(`Are you want to remove ${schedule.title} of ${schedule.creator}`)
         if (confirm) {
-            dispatchSchedules({ type: 'REMOVE_SCHEDULE', id: schedule.id })
-            toast.success("Delete Schedule Successful !", {
-                position: toast.POSITION.TOP_RIGHT
-            });
+            props.removeSchedule(schedule.id)
         }
     }
     return (
@@ -39,11 +32,11 @@ const ScheduleItem = (props) => {
             <td>
                 <Link
                     to={`/schedule/edit/${schedule.id}`}
-                    type="submit"
+                    type="button"
                     className="btn btn-primary flex-center"
                     style={{ marginRight: '1rem' }}
                 >
-                    <ion-icon  class='btn-icon' name="information-circle-outline"></ion-icon>Detail</Link>
+                    <ion-icon class='btn-icon' name="information-circle-outline"></ion-icon>Detail</Link>
             </td>
             <td>
                 <Link
@@ -52,15 +45,15 @@ const ScheduleItem = (props) => {
                     className="btn btn-primary flex-center"
                     style={{ marginRight: '1rem' }}
                 >
-                    <ion-icon  class='btn-icon' name="checkbox-outline"></ion-icon>Edit</Link>
+                    <ion-icon class='btn-icon' name="checkbox-outline"></ion-icon>Edit</Link>
             </td>
             <td>
                 <button
-                    type="submit"
+                    type="button"
                     className="btn btn-danger flex-center"
                     style={{ marginRight: '1rem' }}
-                    onClick={() => handleRemove()}>
-                    <ion-icon  class='btn-icon' name="trash-outline"></ion-icon>Delete</button>
+                    onClick={() => removeSchedule()}>
+                    <ion-icon class='btn-icon' name="trash-outline"></ion-icon>Delete</button>
             </td>
         </tr>
     )

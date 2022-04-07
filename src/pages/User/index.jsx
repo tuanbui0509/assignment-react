@@ -1,16 +1,15 @@
-import React, { useContext, useState } from 'react'
-import UserItem from '../../components/User/UserItem'
-import UserList from '../../components/User/UserList'
-import { Context } from '../../store/context/Context'
+import React, { useState } from 'react';
+import UserItem from '../../components/User/UserItem';
+import UserList from '../../components/User/UserList';
+
 const User = props => {
     const [isAdd, setIsAdd] = useState(false)
-    const { users } = useContext(Context);
+
     const handleCancel = () => {
         var confirm = window.confirm(`Are you want to cancel user`)
         if (confirm)
             setIsAdd(false)
     }
-
     return (
         <div className="container">
             {isAdd ? <button
@@ -27,10 +26,9 @@ const User = props => {
             }
             <div className="row">
                 {isAdd ? <UserItem user={null} setIsAdd={setIsAdd} /> : null}
-                <UserList users={users} />
+                <UserList />
             </div>
         </div>
-
     )
 }
 

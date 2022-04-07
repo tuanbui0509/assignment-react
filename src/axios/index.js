@@ -7,33 +7,71 @@ const axiosClient = axios.create({
   },
 });
 
-const sleep = () =>
-  new Promise((resolve) => {
-    setTimeout(resolve, 1000);
-  });
+const errorHandler = error => {
+  return Promise.reject(error.response);
+};
 
-axios.interceptors.request.use(function (config) {
-  // Do something before request is sent
-  const getLocalToken = localStorage.getItem('token') ?? '';
-  if (getLocalToken) {
-    config.headers.Authorization = `Bearer ${getLocalToken}`;
+const responseHandler = async response => {
+  if (response.status === 401) {
+    localStorage.removeItem('Token')
+    window.location = "/login";
   }
-  return config;
-}, function (error) {
-  // Do something with request error
-  return Promise.reject(error);
-});
+  return response;
+};
 
-
-axios.interceptors.response.use(
-  async (response) => {
-    await sleep();
-    return response;
-  },
-  (error) => {
-    console.log(error.response);
-    return Promise.reject(error.response);
+const requestHandler = async request => {
+  const Token = localStorage.getItem('token') ?? '';
+  if (Token) {
+    request.headers.Authorization = `Bearer ${Token}`;
   }
+  return request;
+};
+
+axiosClient.interceptors.request.use(
+  (request) => requestHandler(request),
+  (error) => errorHandler(error)
 );
+
+axiosClient.interceptors.response.use(
+  (response) => responseHandler(response),
+  (error) => errorHandler(error)
+);
+
+// axios.interceptors.response.use((response) => {
+//   return response;
+// },
+//   (error) => {
+//     return new Promise((resolve) => {
+//       const originalRequest = error.config;
+//       const refreshToken = localStorage.getItem('refreshToken')
+//       if (error.response && error.response.status === 401 && error.config && refreshToken) {
+//         console.log(error.config);
+//         const response = fetch("http://localhost:4000/auth/token", {
+//           method: 'POST',
+//           headers: {
+//             'Content-Type': 'application/json',
+//           },
+//           body: JSON.stringify({
+//             refreshToken: refreshToken,
+//           }),
+//         })
+//           .then((res) => res.json())
+//           .then((res) => {
+//             originalRequest.headers.Authorization = "Bearer " + res.body.tokenAccess
+//             console.log(res);
+//             console.log(error.config);
+//             localStorage.removeItem('accessToken')
+//             localStorage.setItem('accessToken', res.body.tokenAccess)
+//             return axios(originalRequest)
+//           })
+//           .catch(error => {
+//             window.location = "/login";
+//             return error
+//           })
+//         resolve(response);
+//       }
+//       return Promise.reject(error)
+//     })
+//   });
 
 export default axiosClient;

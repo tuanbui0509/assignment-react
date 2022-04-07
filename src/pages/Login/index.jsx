@@ -7,6 +7,8 @@ import * as Yup from "yup";
 import { loginAPI } from "../../api/Login";
 import { login, removeLogin } from "../../redux/Login";
 import useLoading from "../../hook/HookLoading";
+import { notificationSuccess } from "../../helper/Notification";
+import { LOGIN_SUCCESS, MESSAGE_FAILURE } from "../../constants/Respone";
 
 const Login = props => {
     const history = useHistory()
@@ -20,18 +22,14 @@ const Login = props => {
             const res = await loginAPI(JSON.stringify(value));
             let temp = res.data;
             console.log(temp);
-            dispatch(login())
             localStorage.setItem('token', temp.token)
             localStorage.setItem('user', temp.username)
+            dispatch(login())
             history.push('/')
-            toast.success("Login Successful !", {
-                position: toast.POSITION.TOP_RIGHT
-            });
+            notificationSuccess(LOGIN_SUCCESS, 1000);
         } catch (err) {
             console.log(err.response.data.message);
-            toast.success(err.response.data.message, {
-                position: toast.POSITION.TOP_RIGHT
-            });
+            notificationSuccess(MESSAGE_FAILURE, 1000);
         }
 
     };

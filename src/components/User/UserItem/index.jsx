@@ -1,30 +1,33 @@
-import React, { useEffect, useState, useContext } from 'react'
-import { Link } from 'react-router-dom'
 import PropTypes from 'prop-types';
-import { toast } from 'react-toastify'
-import { Context } from '../../../store/context/Context'
+import React, { useEffect, useState } from 'react';
+import { Link, useHistory } from 'react-router-dom';
+import { toast } from 'react-toastify';
+import { insertUser, updateUser } from '../../../api/User';
+import { INSERT_USER_SUCCESS, MESSAGE_FAILURE, UPDATE_USER_SUCCESS } from '../../../constants/Respone';
+import { notificationError, notificationSuccess } from '../../../helper/Notification';
+import useLoading from "../../../hook/HookLoading";
 const user_icon = require('../../../assets/images/icon-user.png').default
 const UserItem = (props) => {
     const { user } = props
     const [isEditing, setIsEditing] = useState(false)
-    const { dispatchUsers } = useContext(Context)
+    const [hidden, display, Loading] = useLoading();
 
     const [userEditing, setUserEditing] = useState({
         id: '',
         name: '',
-        position: '',
+        title: '',
         image: user_icon,
         password: '',
         email: ''
     })
     const [validate, setValidate] = useState({
         name: false,
-        position: false,
+        title: false,
     })
     useEffect(() => {
         setValidate({
             name: false,
-            position: false,
+            title: false,
         })
     }, [isEditing])
     const handleRemove = (user) => {
@@ -35,12 +38,8 @@ const UserItem = (props) => {
             var confirm = window.confirm(`Are you want to remove ${user?.name}`)
             if (confirm) {
                 setIsEditing(false)
-                dispatchUsers({ type: 'REMOVE_USER', id: user.id })
-                toast.success("Remove User Successful !", {
-                    position: toast.POSITION.TOP_RIGHT
-                });
-            } else {
-            }
+                props.handleRemoveUser(user.id)
+            } 
         }
     }
 
@@ -48,32 +47,25 @@ const UserItem = (props) => {
         setUserEditing(user)
         setIsEditing(true)
     }
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        if (userEditing.name === '' && userEditing.position === '') {
-            setValidate({ name: true, position: true })
+        if (userEditing.name === '' && userEditing.title === '') {
+            setValidate({ name: true, title: true })
             return
         }
         if (userEditing.name === '') {
             setValidate({ ...validate, name: true })
             return
         }
-        if (userEditing.position === '') {
+        if (userEditing.title === '') {
             setValidate({ ...validate, name: true })
             return
         }
-        console.log(userEditing.id);
         if (userEditing.id === '') {
-            dispatchUsers({ type: 'ADD_USER', user: userEditing })
-            toast.success("Add User Successful !", {
-                position: toast.POSITION.TOP_RIGHT
-            });
+            props.handleAddUser(user)
         }
         else {
-            dispatchUsers({ type: 'UPDATE_USER', user: userEditing })
-            toast.success("Update User Successful !", {
-                position: toast.POSITION.TOP_RIGHT
-            });
+            props.handleUpdateUser(userEditing)
         }
         if (!user) {
             props.setIsAdd(false)
@@ -129,31 +121,31 @@ const UserItem = (props) => {
                     </Link>
                     <div className="card-body">
                         {user && !isEditing ?
-                            <h5 className="card-title">{user.position}</h5>
+                            <h5 className="card-title">{user.title}</h5>
                             : <>
                                 <input
                                     type="text"
                                     className="form-control"
                                     id="title"
                                     name="title"
-                                    placeholder="Insert the Position"
+                                    placeholder="Insert the title"
                                     onBlur={(e) => {
                                         if (e.target.value.length === 0) {
-                                            setValidate({ ...validate, position: true })
+                                            setValidate({ ...validate, title: true })
                                         }
                                     }}
-                                    value={userEditing.position}
+                                    value={userEditing.title}
                                     onChange={(e) => {
                                         if (e.target.value.length === 0) {
-                                            setValidate({ ...validate, position: true })
+                                            setValidate({ ...validate, title: true })
                                         }
                                         else {
-                                            setValidate({ ...validate, position: false })
+                                            setValidate({ ...validate, title: false })
                                         }
-                                        setUserEditing({ ...userEditing, position: e.target.value })
+                                        setUserEditing({ ...userEditing, title: e.target.value })
                                     }}
                                 />
-                                {validate.position ? <p className='bg-danger p-2 text-danger bg-opacity-25'>You need enter to Position</p> : null}
+                                {validate.title ? <p className='bg-danger p-2 text-danger bg-opacity-25'>You need enter to title</p> : null}
                             </>
                         }
                         <Link to="/schedule" className="btn btn-primary m-2">Schedule</Link>
@@ -193,7 +185,7 @@ const UserItem = (props) => {
                     </div>
                 </div>
             </form>
-
+            {Loading}
         </div>
     )
 }
