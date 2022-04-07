@@ -1,17 +1,11 @@
 import PropTypes from 'prop-types';
 import React, { useEffect, useState } from 'react';
-import { Link, useHistory } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { insertUser, updateUser } from '../../../api/User';
-import { INSERT_USER_SUCCESS, MESSAGE_FAILURE, UPDATE_USER_SUCCESS } from '../../../constants/Respone';
-import { notificationError, notificationSuccess } from '../../../helper/Notification';
+import { Link } from 'react-router-dom';
 import useLoading from "../../../hook/HookLoading";
 const user_icon = require('../../../assets/images/icon-user.png').default
 const UserItem = (props) => {
     const { user } = props
     const [isEditing, setIsEditing] = useState(false)
-    const [hidden, display, Loading] = useLoading();
-
     const [userEditing, setUserEditing] = useState({
         id: '',
         name: '',
@@ -39,7 +33,7 @@ const UserItem = (props) => {
             if (confirm) {
                 setIsEditing(false)
                 props.handleRemoveUser(user.id)
-            } 
+            }
         }
     }
 
@@ -185,7 +179,6 @@ const UserItem = (props) => {
                     </div>
                 </div>
             </form>
-            {Loading}
         </div>
     )
 }

@@ -1,10 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useState } from 'react';
 import { useHistory } from "react-router-dom";
-import { toast } from 'react-toastify';
-import { Context } from '../../../store/context/Context';
+import { insertSchedule } from '../../../api/Schedule';
+import { INSERT_SCHEDULE_SUCCESS, MESSAGE_FAILURE } from '../../../constants/Respone';
+import { notificationError, notificationSuccess } from '../../../helper/Notification';
+import useLoading from "../../../hook/HookLoading";
+
 const AddSchedule = props => {
     const history = useHistory();
-    const { dispatchSchedules } = useContext(Context);
+    const [hidden, display, Loading] = useLoading();
 
     const [schedule, setSchedule] = useState({
         title: '',
@@ -15,15 +18,21 @@ const AddSchedule = props => {
         time_end: new Date()
     })
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatchSchedules({ type: 'ADD_SCHEDULE', schedule })
-        toast.success("Add Schedule Successful !", {
-            position: toast.POSITION.TOP_RIGHT
-        });
-        history.push('/schedule')
+        try {
+            display();
+            const res = await insertSchedule(schedule);
+            console.log(res.data);
+            notificationSuccess(INSERT_SCHEDULE_SUCCESS, 1000);
+            hidden();
+            history.push('/schedule')
+        } catch (err) {
+            hidden();
+            notificationError(MESSAGE_FAILURE, 3000);
+            console.log(err);
+        }
     }
-
 
     return (
         <div>
@@ -32,7 +41,7 @@ const AddSchedule = props => {
                 className="btn btn-danger flex-center"
                 onClick={() => { history.goBack() }}
             >
-                <ion-icon  class='btn-icon' name="arrow-back-circle"></ion-icon>Back
+                <ion-icon class='btn-icon' name="arrow-back-circle"></ion-icon>Back
             </button>
             <ul className="nav nav-tabs justify-content-end" id="myTab" role="tablist">
                 <li className="nav-item" role="presentation">
@@ -115,16 +124,16 @@ const AddSchedule = props => {
                         </div>
 
                         <div className='flex-end'>
-                            <button type="submit" className="btn btn-primary flex-center"><ion-icon  class='btn-icon' name="add-circle-outline"></ion-icon>Add</button>
+                            <button type="submit" className="btn btn-primary flex-center"><ion-icon class='btn-icon' name="add-circle-outline"></ion-icon>Add</button>
                             <button type="button" className="btn btn-light flex-center" onClick={() => { history.push('/schedule') }}>
-                                <ion-icon  class='btn-icon' name="pencil-outline"></ion-icon>Cancel</button>
+                                <ion-icon class='btn-icon' name="pencil-outline"></ion-icon>Cancel</button>
                         </div>
                     </form>
 
                 </div>
             </div>
 
-
+            {Loading}
         </div>
 
     )

@@ -1,13 +1,17 @@
 import moment from 'moment';
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from "react-router-dom";
-import { toast } from 'react-toastify';
 import { Table } from 'reactstrap';
-import { Context } from '../../../store/context/Context';
+import { getAllSchedule, updateSchedule } from '../../../api/Schedule';
+import { INSERT_SCHEDULE_SUCCESS, MESSAGE_FAILURE } from '../../../constants/Respone';
+import { notificationError, notificationSuccess } from '../../../helper/Notification';
+import useLoading from "../../../hook/HookLoading";
+import { getListSchedule } from '../../../redux/Schedule'
 const EditSchedule = props => {
     const history = useHistory();
-    const { schedules, dispatchSchedules } = useContext(Context);
     const { id } = useParams()
+    const [hidden, display, Loading] = useLoading();
 
     const [schedule, setSchedule] = useState({
         title: '',
@@ -17,29 +21,54 @@ const EditSchedule = props => {
         time_start: moment(new Date()).format('DD/MM/yyyy HH:mm:ss'),
         time_end: moment(new Date()).format('DD/MM/yyyy HH:mm:ss')
     })
-
-    const handleSubmit = (e) => {
+    const schedules = useSelector((state) => state.Schedule);
+    const dispatch = useDispatch();
+    const getUsers = async () => {
+        try {
+            display();
+            const res = await getAllSchedule();
+            let temp = res.data;
+            hidden();
+            dispatch(getListSchedule(temp));
+        } catch (err) {
+            hidden();
+            console.log(err);
+        }
+    };
+    useEffect(() => {
+        getUsers();
+    }, []);
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatchSchedules({ type: 'UPDATE_SCHEDULE', schedule })
-        toast.success("Update Schedule Successful !", {
-            position: toast.POSITION.TOP_RIGHT
-        });
-        history.push('/schedule')
+        try {
+            display();
+            const res = await updateSchedule(schedule);
+            console.log(res.data);
+            notificationSuccess(INSERT_SCHEDULE_SUCCESS, 1000);
+            hidden();
+            history.push('/schedule')
+        } catch (err) {
+            hidden();
+            notificationError(MESSAGE_FAILURE, 3000);
+            console.log(err);
+        }
     }
-
+    const scheduleView = useSelector(state => {
+        const foundSchedule = state.Schedule.find(x => x.id === +id);
+        return foundSchedule;
+    });
 
     useEffect(() => {
-        const scheduleView = schedules.filter(item => item.id === id)
         setSchedule({
-            id: scheduleView[0].id,
-            title: scheduleView[0].title,
-            description: scheduleView[0].description,
-            creator: scheduleView[0].creator,
-            location: scheduleView[0].location,
-            time_start: scheduleView[0].time_start,
-            time_end: scheduleView[0].time_end
+            id: scheduleView.id,
+            title: scheduleView.title,
+            description: scheduleView.description,
+            creator: scheduleView.creator,
+            location: scheduleView.location,
+            time_start: scheduleView.time_start,
+            time_end: scheduleView.time_end
         })
-    }, [id, schedules])
+    }, [scheduleView.creator, scheduleView.description, scheduleView.id, scheduleView.location, scheduleView.time_end, scheduleView.time_start, scheduleView.title])
 
     return (
         <div>
