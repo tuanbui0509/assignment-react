@@ -8,7 +8,7 @@ const axiosClient = axios.create({
 });
 
 const errorHandler = error => {
-  return Promise.reject(error.response);
+  return Promise.reject(error);
 };
 
 const responseHandler = async response => {

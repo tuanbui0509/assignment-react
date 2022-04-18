@@ -28,8 +28,7 @@ const MenuLink = ({ label, to, activeOnlyWhenExact }) => {
 }
 
 const Menu = () => {
-    // const { login } = useContext(Context);
-
+    const user = JSON.parse(localStorage.getItem('User'))
     return (
         <nav className="navbar navbar-expand-lg navbar-light bg-light">
             <div className="container">
@@ -38,7 +37,7 @@ const Menu = () => {
                         {showMenus(menus)}
                     </nav>
                 </div>
-                {/* {login ? <span className='flex-center'><ion-icon name="person-circle-outline"></ion-icon>Username: {login.email}</span> : null} */}
+                <span className='flex-center'><ion-icon name="person-circle-outline"></ion-icon>{user.name} - {user.title}</span>
             </div>
         </nav>
     )

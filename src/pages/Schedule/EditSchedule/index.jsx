@@ -7,7 +7,7 @@ import { getAllSchedule, updateSchedule } from '../../../api/Schedule';
 import { INSERT_SCHEDULE_SUCCESS, MESSAGE_FAILURE } from '../../../constants/Respone';
 import { notificationError, notificationSuccess } from '../../../helper/Notification';
 import useLoading from "../../../hook/HookLoading";
-import { getListSchedule } from '../../../redux/Schedule'
+import { getListSchedule } from '../../../redux/Schedule';
 const EditSchedule = props => {
     const history = useHistory();
     const { id } = useParams()

@@ -1,11 +1,11 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getListUser, removeUser } from '../../../redux/User';
-import UserItem from '../UserItem';
-import useLoading from "../../../hook/HookLoading";
 import { deleteUser, getAllUser, insertUser, updateUser } from '../../../api/User';
-import { notificationError, notificationSuccess } from '../../../helper/Notification';
 import { DELETE_USER_SUCCESS, INSERT_USER_SUCCESS, MESSAGE_FAILURE, UPDATE_USER_SUCCESS } from '../../../constants/Respone';
+import { notificationError, notificationSuccess } from '../../../helper/Notification';
+import useLoading from "../../../hook/HookLoading";
+import { getListUser } from '../../../redux/Users';
+import UserItem from '../UserItem';
 
 const UserList = React.memo((props) => {
     const [hidden, display, Loading] = useLoading();

@@ -1,7 +1,6 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
-import { ToastContainer } from "react-toastify";
 import Menu from './components/Navbar';
 import Login from "./pages/Login";
 import routes from './routes/router';
@@ -30,10 +29,6 @@ const App = () => {
           <div className="row">
             {showContentMenus(routes)}
           </div>
-          <ToastContainer
-            position="top-right"
-            autoClose={2000}
-          />
         </div>
       </Router>
         : <Router>

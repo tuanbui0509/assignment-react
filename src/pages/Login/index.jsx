@@ -5,37 +5,37 @@ import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import * as Yup from "yup";
 import { loginAPI } from "../../api/Login";
-import { login, removeLogin } from "../../redux/Login";
-import useLoading from "../../hook/HookLoading";
-import { notificationSuccess } from "../../helper/Notification";
 import { LOGIN_SUCCESS, MESSAGE_FAILURE } from "../../constants/Respone";
+import { notificationError, notificationSuccess } from "../../helper/Notification";
+import { login, removeLogin } from "../../redux/Login";
+import { getUser } from "../../redux/User";
 
 const Login = props => {
     const history = useHistory()
-    const [hidden, display, Loading] = useLoading();
-
     const dispatch = useDispatch();
     const isToken = useSelector((state) => state.Login)
-    console.log(isToken);
     const handleSubmit = async (value) => {
         try {
             const res = await loginAPI(JSON.stringify(value));
             let temp = res.data;
-            console.log(temp);
             localStorage.setItem('token', temp.token)
-            localStorage.setItem('user', temp.username)
-            dispatch(login())
-            history.push('/')
+            localStorage.setItem('User', JSON.stringify(temp.loginUser))
             notificationSuccess(LOGIN_SUCCESS, 1000);
+            setTimeout(() => {
+                dispatch(login());
+                dispatch(getUser(JSON.stringify(temp.loginUser)))
+                history.replace("/");
+            }, 1000);
         } catch (err) {
-            console.log(err.response.data.message);
-            notificationSuccess(MESSAGE_FAILURE, 1000);
+            console.log(err.response.data);
+            notificationError(MESSAGE_FAILURE, 3000);
         }
-
     };
 
     const handleLogout = () => {
         dispatch(removeLogin())
+        localStorage.removeItem('token')
+        localStorage.removeItem('User')
         toast.success("You Logout Successful !", {
             position: toast.POSITION.TOP_RIGHT
         });
@@ -49,7 +49,7 @@ const Login = props => {
     });
 
     return (
-        <div className="container">
+        <div className="container position-relative">
             <div className='container-form container-login'>
                 {!isToken ?
                     <div className="row">
@@ -59,7 +59,7 @@ const Login = props => {
                                 validationSchema={LoginSchema}
                                 onSubmit={handleSubmit}
                             >
-                                {({ touched, errors, isSubmitting, values }) =>
+                                {({ touched, errors }) =>
                                 (
                                     <div>
                                         <div className="row mb-2">
@@ -72,9 +72,9 @@ const Login = props => {
                                                 <div className="form-group">
                                                     <label>Username</label>
                                                     <Field
+                                                        autocomplete="off"
                                                         name="Username"
                                                         placeholder="Enter Username"
-                                                        autocomplete="off"
                                                         className={`mt-2 form-control
                           ${touched.Username && errors.Username ? "is-invalid" : ""}`}
                                                     />
@@ -90,6 +90,7 @@ const Login = props => {
                                                         Password
                                                     </label>
                                                     <Field
+                                                        autocomplete="off"
                                                         type="password"
                                                         name="password"
                                                         placeholder="Enter password"
@@ -116,7 +117,6 @@ const Login = props => {
                 }
 
             </div>
-            {/* {Loading} */}
         </div>
     )
 }
