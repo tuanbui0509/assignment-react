@@ -10,7 +10,7 @@ import UserItem from '../UserItem';
 const UserList = React.memo((props) => {
     const [hidden, display, Loading] = useLoading();
 
-    const users = useSelector((state) => state.User);
+    const users = useSelector((state) => state.Users);
     const dispatch = useDispatch();
     const getUsers = async () => {
         try {

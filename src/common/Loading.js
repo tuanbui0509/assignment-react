@@ -1,14 +1,11 @@
 import React from "react";
+import { Spinner } from "reactstrap";
 
 export default function Loading() {
   return (
-    <div style={{
-
-      // width: '100%',
-      display: 'block',
-      height: '100%'
-    }}>
-      <img alt="" src="https://www.downgraf.com/wp-content/uploads/2019/05/Loader-animation-principle-freebie.gif" />
+    <div className="m-auto">
+      <Spinner animation="grow" size="sm" />
+      <Spinner animation="grow" />
     </div>
   );
 }
