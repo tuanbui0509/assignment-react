@@ -2,29 +2,24 @@ import PropTypes from 'prop-types'
 import React, { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { Link } from 'react-router-dom'
-import useLoading from "../../hook/HookLoading"
 import { deleteSchedule, getAllSchedule } from '../../api/Schedule'
 import ScheduleItem from '../../components/Schedule/ScheduleItem'
 import ScheduleList from '../../components/Schedule/ScheduleList'
-import { getListSchedule } from '../../redux/Schedule'
-import { notificationError, notificationSuccess } from '../../helper/Notification'
 import { DELETE_SCHEDULE__SUCCESS, MESSAGE_FAILURE } from '../../constants/Respone'
+import { notificationError, notificationSuccess } from '../../helper/Notification'
+import { getListSchedule } from '../../redux/Schedule'
 
 
 const Schedule = props => {
-    const [hidden, display, Loading] = useLoading();
     const schedules = useSelector((state) => state.Schedule);
     const dispatch = useDispatch();
 
     const getListUser = async () => {
         try {
-            display();
             const res = await getAllSchedule();
             let temp = res.data;
-            hidden();
             dispatch(getListSchedule(temp));
         } catch (err) {
-            hidden();
             console.log(err);
         }
     };
@@ -35,14 +30,11 @@ const Schedule = props => {
 
     const handleRemoveSchedule = async (scheduleId) => {
         try {
-            display();
             const res = await deleteSchedule(scheduleId);
             notificationSuccess(DELETE_SCHEDULE__SUCCESS, 1000);
-            hidden();
             getListUser();
 
         } catch (err) {
-            hidden();
             notificationError(MESSAGE_FAILURE, 3000);
             console.log(err);
         }
@@ -69,7 +61,6 @@ const Schedule = props => {
             <ScheduleList>
                 {showListSchedule()}
             </ScheduleList>
-            {Loading}
         </>
     )
 }

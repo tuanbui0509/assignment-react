@@ -3,24 +3,19 @@ import { useDispatch, useSelector } from 'react-redux';
 import { deleteUser, getAllUser, insertUser, updateUser } from '../../../api/User';
 import { DELETE_USER_SUCCESS, INSERT_USER_SUCCESS, MESSAGE_FAILURE, UPDATE_USER_SUCCESS } from '../../../constants/Respone';
 import { notificationError, notificationSuccess } from '../../../helper/Notification';
-import useLoading from "../../../hook/HookLoading";
 import { getListUser } from '../../../redux/Users';
 import UserItem from '../UserItem';
 
 const UserList = React.memo((props) => {
-    const [hidden, display, Loading] = useLoading();
 
     const users = useSelector((state) => state.Users);
     const dispatch = useDispatch();
     const getUsers = async () => {
         try {
-            display();
             const res = await getAllUser();
             let temp = res.data;
-            hidden();
             dispatch(getListUser(temp));
         } catch (err) {
-            hidden();
             console.log(err);
         }
     };
@@ -30,14 +25,11 @@ const UserList = React.memo((props) => {
 
     const handleAddUser = async (user) => {
         try {
-            display();
             const res = await insertUser(user);
             console.log(res.data);
             notificationSuccess(INSERT_USER_SUCCESS, 1000);
-            hidden();
             getUsers();
         } catch (err) {
-            hidden();
             notificationError(MESSAGE_FAILURE, 3000);
             console.log(err);
         }
@@ -45,13 +37,10 @@ const UserList = React.memo((props) => {
 
     const handleRemoveUser = async (userId) => {
         try {
-            display();
             const res = await deleteUser(userId);
             notificationSuccess(DELETE_USER_SUCCESS, 1000);
-            hidden();
             getUsers();
         } catch (err) {
-            hidden();
             notificationError(MESSAGE_FAILURE, 3000);
             console.log(err);
         }
@@ -60,13 +49,10 @@ const UserList = React.memo((props) => {
     const handleUpdateUser = async (user) => {
         console.log(user);
         try {
-            display();
             const res = await updateUser(user);
             console.log(res.data);
             notificationSuccess(UPDATE_USER_SUCCESS, 1000);
-            hidden();
         } catch (err) {
-            hidden();
             notificationError(MESSAGE_FAILURE, 3000);
             console.log(err);
         }
@@ -91,7 +77,6 @@ const UserList = React.memo((props) => {
     return (
         <>
             {showUsers()}
-            {Loading}
         </>
     )
 }

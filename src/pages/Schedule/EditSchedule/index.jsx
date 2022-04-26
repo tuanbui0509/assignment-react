@@ -6,13 +6,10 @@ import { Table } from 'reactstrap';
 import { getAllSchedule, updateSchedule } from '../../../api/Schedule';
 import { INSERT_SCHEDULE_SUCCESS, MESSAGE_FAILURE } from '../../../constants/Respone';
 import { notificationError, notificationSuccess } from '../../../helper/Notification';
-import useLoading from "../../../hook/HookLoading";
 import { getListSchedule } from '../../../redux/Schedule';
 const EditSchedule = props => {
     const history = useHistory();
     const { id } = useParams()
-    const [hidden, display, Loading] = useLoading();
-
     const [schedule, setSchedule] = useState({
         title: '',
         description: '',
@@ -21,17 +18,13 @@ const EditSchedule = props => {
         time_start: moment(new Date()).format('DD/MM/yyyy HH:mm:ss'),
         time_end: moment(new Date()).format('DD/MM/yyyy HH:mm:ss')
     })
-    const schedules = useSelector((state) => state.Schedule);
     const dispatch = useDispatch();
     const getUsers = async () => {
         try {
-            display();
             const res = await getAllSchedule();
             let temp = res.data;
-            hidden();
             dispatch(getListSchedule(temp));
         } catch (err) {
-            hidden();
             console.log(err);
         }
     };
@@ -41,14 +34,11 @@ const EditSchedule = props => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            display();
             const res = await updateSchedule(schedule);
             console.log(res.data);
             notificationSuccess(INSERT_SCHEDULE_SUCCESS, 1000);
-            hidden();
             history.push('/schedule')
         } catch (err) {
-            hidden();
             notificationError(MESSAGE_FAILURE, 3000);
             console.log(err);
         }
@@ -221,7 +211,6 @@ const EditSchedule = props => {
                     </div>
                 </div>
             </div>
-
         </div>
     )
 }

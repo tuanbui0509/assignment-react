@@ -7,7 +7,6 @@ import useLoading from "../../../hook/HookLoading";
 
 const AddTask = props => {
     const history = useHistory();
-    const [hidden, display, Loading] = useLoading();
 
     const [task, setTask] = useState({
         title: '',
@@ -18,14 +17,11 @@ const AddTask = props => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         try {
-            display();
             const res = await insertTask(task);
             console.log(res.data);
             notificationSuccess(UPDATE_TASK_SUCCESS, 1000);
-            hidden();
             history.push('/')
         } catch (err) {
-            hidden();
             notificationError(MESSAGE_FAILURE, 3000);
             console.log(err);
         }
@@ -123,7 +119,6 @@ const AddTask = props => {
 
                 </div>
             </div>
-            {Loading}
         </div>
 
     )

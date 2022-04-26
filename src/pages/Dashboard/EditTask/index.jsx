@@ -4,12 +4,10 @@ import { useHistory, useParams } from "react-router-dom";
 import { deleteTask, updateTask } from '../../../api/Task';
 import { DELETE_TASK_SUCCESS, MESSAGE_FAILURE, UPDATE_TASK_SUCCESS } from '../../../constants/Respone';
 import { notificationError, notificationSuccess } from '../../../helper/Notification';
-import useLoading from "../../../hook/HookLoading";
 
 const EditTask = props => {
     const history = useHistory();
     const { id } = useParams()
-    const [hidden, display, Loading] = useLoading();
 
     const [task, setTask] = useState({
         id: '',
@@ -21,14 +19,11 @@ const EditTask = props => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            display();
             const res = await updateTask(task);
             console.log(res.data);
             notificationSuccess(UPDATE_TASK_SUCCESS, 1000);
-            hidden();
             history.push('/')
         } catch (err) {
-            hidden();
             notificationError(MESSAGE_FAILURE, 3000);
             console.log(err);
         }
@@ -37,14 +32,11 @@ const EditTask = props => {
         var confirm = window.confirm(`Are you want to remove ${task.title}`)
         if (confirm) {
             try {
-                display();
                 const res = await deleteTask(task.id);
                 console.log(res.data);
                 notificationSuccess(DELETE_TASK_SUCCESS, 1000);
-                hidden();
                 history.push('/')
             } catch (err) {
-                hidden();
                 notificationError(MESSAGE_FAILURE, 3000);
                 console.log(err);
             }
@@ -168,7 +160,6 @@ const EditTask = props => {
                     </div>
                 </div>
             </div>
-            {Loading}
         </div>
 
     )

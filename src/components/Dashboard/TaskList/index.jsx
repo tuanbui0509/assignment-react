@@ -1,23 +1,18 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllTask } from '../../../api/Task';
-import useLoading from "../../../hook/HookLoading";
 import { getListTask } from "../../../redux/Task";
 import Task from '../Task';
 const TaskList = () => {
-    const [hidden, display, Loading] = useLoading();
     const tasks = useSelector((state) => state.Task);
     const dispatch = useDispatch();
 
     const getListUser = async () => {
         try {
-            display();
             const res = await getAllTask();
             let temp = res.data;
-            hidden();
             dispatch(getListTask(temp));
         } catch (err) {
-            hidden();
             console.log(err);
         }
     };
@@ -54,7 +49,6 @@ const TaskList = () => {
                     />
                 </div>
             </div>
-            {Loading}
         </>
     )
 }

@@ -3,11 +3,9 @@ import { useHistory } from "react-router-dom";
 import { insertSchedule } from '../../../api/Schedule';
 import { INSERT_SCHEDULE_SUCCESS, MESSAGE_FAILURE } from '../../../constants/Respone';
 import { notificationError, notificationSuccess } from '../../../helper/Notification';
-import useLoading from "../../../hook/HookLoading";
 
 const AddSchedule = props => {
     const history = useHistory();
-    const [hidden, display, Loading] = useLoading();
 
     const [schedule, setSchedule] = useState({
         title: '',
@@ -21,14 +19,11 @@ const AddSchedule = props => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            display();
             const res = await insertSchedule(schedule);
             console.log(res.data);
             notificationSuccess(INSERT_SCHEDULE_SUCCESS, 1000);
-            hidden();
             history.push('/schedule')
         } catch (err) {
-            hidden();
             notificationError(MESSAGE_FAILURE, 3000);
             console.log(err);
         }
@@ -132,8 +127,6 @@ const AddSchedule = props => {
 
                 </div>
             </div>
-
-            {Loading}
         </div>
 
     )
