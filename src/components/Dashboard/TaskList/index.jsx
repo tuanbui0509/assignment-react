@@ -1,26 +1,14 @@
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { getAllTask } from '../../../api/Task';
-import { getListTask } from "../../../redux/Task";
+import { fetchTasks } from '../../../redux/Task';
 import Task from '../Task';
 const TaskList = () => {
-    const tasks = useSelector((state) => state.Task);
+    const tasks = useSelector((state) => state.Task.tasks);
     const dispatch = useDispatch();
 
-    const getListUser = async () => {
-        try {
-            const res = await getAllTask();
-            let temp = res.data;
-            dispatch(getListTask(temp));
-        } catch (err) {
-            console.log(err);
-        }
-    };
-
     useEffect(() => {
-        getListUser();
-    }, []);
-
+        dispatch(fetchTasks());
+    }, [])
     return (
         <>
             <div className="row align-items-start ">

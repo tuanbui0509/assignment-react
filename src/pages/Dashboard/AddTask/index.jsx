@@ -1,24 +1,25 @@
 import React, { useState } from 'react';
+import { useDispatch } from 'react-redux';
 import { useHistory } from "react-router-dom";
 import { insertTask } from '../../../api/Task';
 import { MESSAGE_FAILURE, UPDATE_TASK_SUCCESS } from '../../../constants/Respone';
 import { notificationError, notificationSuccess } from '../../../helper/Notification';
 import useLoading from "../../../hook/HookLoading";
+import { addNewTask, addTask } from '../../../redux/Task';
 
 const AddTask = props => {
     const history = useHistory();
-
+    const dispatch = useDispatch();
     const [task, setTask] = useState({
         title: '',
         description: '',
         state: 1
     })
 
-    const handleSubmit = async (e) => {
+    const handleSubmit = (e) => {
         e.preventDefault()
         try {
-            const res = await insertTask(task);
-            console.log(res.data);
+            dispatch(addNewTask(task))
             notificationSuccess(UPDATE_TASK_SUCCESS, 1000);
             history.push('/')
         } catch (err) {

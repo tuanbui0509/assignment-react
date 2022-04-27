@@ -10,11 +10,11 @@ export const getTaskById = (id) => {
     return axiosClient.get(`${taskString}/${id}`);
 }
 
-export const updateTask = (body) => {
+export const updateTaskApi = (body) => {
     return axiosClient.put(`${taskString}/${body.id}`, body);
 }
 
-export const deleteTask = (id) => {
+export const deleteTaskApi = (id) => {
     return axiosClient.delete(`${taskString}/${id}`);
 }
 export const insertTask = (body) => {

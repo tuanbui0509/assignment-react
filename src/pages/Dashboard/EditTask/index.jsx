@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from "react-router-dom";
-import { deleteTask, updateTask } from '../../../api/Task';
 import { DELETE_TASK_SUCCESS, MESSAGE_FAILURE, UPDATE_TASK_SUCCESS } from '../../../constants/Respone';
 import { notificationError, notificationSuccess } from '../../../helper/Notification';
+import { deleteTask, updateTask } from '../../../redux/Task';
 
 const EditTask = props => {
     const history = useHistory();
     const { id } = useParams()
-
+    const dispatch = useDispatch();
     const [task, setTask] = useState({
         id: '',
         title: '',
@@ -19,8 +19,7 @@ const EditTask = props => {
     const handleSubmit = async (e) => {
         e.preventDefault();
         try {
-            const res = await updateTask(task);
-            console.log(res.data);
+            dispatch(updateTask(task))
             notificationSuccess(UPDATE_TASK_SUCCESS, 1000);
             history.push('/')
         } catch (err) {
@@ -32,8 +31,7 @@ const EditTask = props => {
         var confirm = window.confirm(`Are you want to remove ${task.title}`)
         if (confirm) {
             try {
-                const res = await deleteTask(task.id);
-                console.log(res.data);
+                dispatch(deleteTask(task.id))
                 notificationSuccess(DELETE_TASK_SUCCESS, 1000);
                 history.push('/')
             } catch (err) {
@@ -44,7 +42,7 @@ const EditTask = props => {
     }
 
     const taskView = useSelector(state => {
-        const foundTask = state.Task.find(x => x.id === +id);
+        const foundTask = state.Task.tasks.find(x => x.id === +id);
         return foundTask;
     });
     useEffect(() => {
